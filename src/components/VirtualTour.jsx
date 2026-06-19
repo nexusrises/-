@@ -840,16 +840,7 @@ export default function VirtualTour({
 
         {/* Botones de Control del Sistema */}
         <div className="flex items-center gap-2 pointer-events-auto">
-          {/* Botón para volver a bloquear interacción en móviles */}
-          {isInteractive && typeof window !== 'undefined' && window.innerWidth < 768 && (
-            <button
-              onClick={() => setIsInteractive(false)}
-              className="px-3 py-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:text-white hover:bg-rose-500/20 transition-all duration-200 cursor-pointer shadow-lg text-[10px] font-bold uppercase tracking-wider font-sans"
-              title="Fijar scroll / Bloquear vista 360°"
-            >
-              Fijar Scroll
-            </button>
-          )}
+
 
           {/* Botón de Pantalla Completa (Fullscreen) */}
           <button
