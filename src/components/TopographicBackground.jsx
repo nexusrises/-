@@ -63,6 +63,23 @@ export default function TopographicBackground() {
     let stepX = (width * 1.6) / (segments - 1);
     let totalLines = Math.floor(height / lineSpacing) + 16;
 
+    // Inicializar los cometas neón (Pulses) antes de llamar a resizeCanvas
+    const particles = [];
+    const initialWidthFactor = Math.max(0.4, width / 1440);
+    for (let i = 0; i < CONFIG.pulses.count; i++) {
+      const baseSpeed = CONFIG.pulses.speedMin + Math.random() * (CONFIG.pulses.speedMax - CONFIG.pulses.speedMin);
+      particles.push({
+        x: Math.random() * width * 1.6 - width * 0.3,
+        lineIndex: Math.floor(Math.random() * totalLines),
+        baseSpeed: baseSpeed,
+        speed: baseSpeed * initialWidthFactor,
+        size: 1.0 + Math.random() * 1.5,
+        pulsePhase: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.03 + Math.random() * 0.04,
+        color: Math.random() > 0.4 ? CONFIG.colors.pulseCian : CONFIG.colors.pulsePurple,
+      });
+    }
+
     const resizeCanvas = () => {
       width = window.innerWidth;
       height = window.innerHeight;
@@ -77,6 +94,12 @@ export default function TopographicBackground() {
       centerY = height / 1.7;
       stepX = (width * 1.6) / (segments - 1);
       totalLines = Math.floor(height / lineSpacing) + 16;
+
+      // Adaptar velocidad de partículas al nuevo ancho
+      const widthFactor = Math.max(0.4, width / 1440);
+      particles.forEach((p) => {
+        p.speed = p.baseSpeed * widthFactor;
+      });
     };
 
     window.addEventListener('resize', resizeCanvas);
@@ -106,20 +129,6 @@ export default function TopographicBackground() {
       return { x: sx, y: sy, scale, opacity: Math.min(1.0, Math.max(0.0, scale * 1.55)) };
     };
 
-    // Inicializar los cometas neón (Pulses)
-    const particles = [];
-    for (let i = 0; i < CONFIG.pulses.count; i++) {
-      particles.push({
-        x: Math.random() * width * 1.6 - width * 0.3,
-        lineIndex: Math.floor(Math.random() * totalLines),
-        speed: CONFIG.pulses.speedMin + Math.random() * (CONFIG.pulses.speedMax - CONFIG.pulses.speedMin),
-        size: 1.0 + Math.random() * 1.5,
-        pulsePhase: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.03 + Math.random() * 0.04,
-        color: Math.random() > 0.4 ? CONFIG.colors.pulseCian : CONFIG.colors.pulsePurple,
-      });
-    }
-
     // ALGORITMO PROCEDURAL FRACTAL BROWNIAN MOTION (FBM)
     const getProceduralNoise = (x, y, time) => {
       let value = 0;
@@ -148,9 +157,14 @@ export default function TopographicBackground() {
     };
 
     let time = 0;
+    let lastTime = performance.now();
 
     const render = () => {
-      time += 0.0016; // Avanzar el tiempo virtual del relieve
+      const now = performance.now();
+      const delta = Math.min(50, now - lastTime) / 16.666; // Normalizado a ~1.0 a 60 FPS
+      lastTime = now;
+
+      time += 0.0016 * delta; // Avanzar el tiempo virtual del relieve independiente de los FPS
 
       // Limpieza transparente del canvas en cada frame para revelar el fondo de la app
       ctx.clearRect(0, 0, width, height);
@@ -235,7 +249,7 @@ export default function TopographicBackground() {
 
       // 2. RENDERIZADO DE PARTÍCULAS NEÓN (PULSES) EN PERSPECTIVA 3D
       particles.forEach((p) => {
-        p.x += p.speed;
+        p.x += p.speed * delta; // Desplazamiento horizontal independiente de los FPS
         
         if (p.x > width * 1.25) {
           p.x = -width * 0.25;

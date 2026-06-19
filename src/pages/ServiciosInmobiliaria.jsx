@@ -202,7 +202,189 @@ export default function ServiciosInmobiliaria() {
     }
   ];
 
-  const currentPreview = previewScreenshots[activeProject];
+  const handleTabClick = (tabId) => {
+    setActiveProject(tabId);
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setTimeout(() => {
+        const element = document.getElementById(`acordeon-${tabId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+    }
+  };
+
+  const renderDetailContent = (projectKey) => {
+    const preview = previewScreenshots[projectKey];
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
+        {/* Contenido / Copys */}
+        <div className="lg:col-span-5 flex flex-col gap-6">
+          <div>
+            <span className="text-[10px] font-bold text-nexus-purple bg-nexus-purple/10 px-2.5 py-1 rounded-full border border-nexus-purple/20 uppercase tracking-widest w-fit block">
+              Así se Estructura tu Sitio Web
+            </span>
+            <h2 className="text-xl md:text-3.5xl font-bold text-white mt-4 leading-tight">
+              {preview.title}
+            </h2>
+            <p className="text-nexus-accent text-xs md:text-sm font-medium mt-1">
+              {preview.subtitle}
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-white/5 rounded-2xl p-5 italic text-gray-300 text-xs md:text-sm leading-relaxed relative mt-2">
+            <span className="absolute -top-3 left-4 bg-nexus-purple text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">El Deseo de tu Negocio</span>
+            {preview.deseosCliente}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/5 pb-2">Características Clave de Conversión:</h4>
+            {preview.features.map((feature, idx) => (
+              <div key={idx} className="flex items-start gap-2.5">
+                <div className="p-1 rounded-full bg-emerald-500/10 text-emerald-400 mt-0.5 border border-emerald-500/20">
+                  <CheckCircle className="w-3.5 h-3.5" />
+                </div>
+                <span className="text-xs text-gray-300 leading-relaxed">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Simulación del Mockup de Pantalla */}
+        <div className="lg:col-span-7 flex flex-col gap-4 w-full">
+          <div className="bg-[#0b0f19] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative w-full">
+            {/* Browser Chrome Simulation */}
+            <div className="bg-[#182035] px-4 py-2 border-b border-white/5 flex items-center gap-2">
+              <div className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-500 block"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 block"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 block"></span>
+              </div>
+              <div className="bg-white/5 rounded-lg text-[10px] text-gray-400 px-6 py-1 mx-auto w-3/4 text-center font-mono overflow-hidden whitespace-nowrap">
+                https://sierra-capital.com
+              </div>
+            </div>
+
+            {/* Screenshot / Render Content */}
+            <div className="relative h-64 md:h-[400px] overflow-hidden w-full">
+              {projectKey === 'preventa' ? (
+                <div className="relative w-full h-full select-none bg-black">
+                  {/* Interactive House Image Swapper */}
+                  <img
+                    src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}${
+                      !topLight && !bottomLight ? '/tour/sinluz.png' :
+                      topLight && !bottomLight ? '/tour/luzarriba.png' :
+                      !topLight && bottomLight ? '/tour/luzabajo.png' :
+                      '/tour/conluz.jpeg'
+                    }`}
+                    alt="Casa interactiva"
+                    className="w-full h-full object-cover transition-all duration-300"
+                  />
+
+                  {/* Interactive Buttons */}
+                  <button
+                    onClick={() => setTopLight(!topLight)}
+                    className={`absolute top-[30%] left-[45%] -translate-x-1/2 -translate-y-1/2 px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer ${topLight
+                        ? 'bg-[#182035] text-white hover:bg-[#182035]/80'
+                        : 'bg-white text-black hover:bg-white/95 scale-105'
+                      }`}
+                  >
+                    {topLight ? 'off' : 'on'}
+                  </button>
+
+                  <button
+                    onClick={() => setBottomLight(!bottomLight)}
+                    className={`absolute top-[60%] left-[55%] -translate-x-1/2 -translate-y-1/2 px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer ${bottomLight
+                        ? 'bg-[#182035] text-white hover:bg-[#182035]/80'
+                        : 'bg-white text-black hover:bg-white/95 scale-105'
+                      }`}
+                  >
+                    {bottomLight ? 'off' : 'on'}
+                  </button>
+                </div>
+              ) : (
+                <img
+                  src={(() => {
+                    const imgPath = projectKey === 'residencial' ? '/tour/fotografiaaereamaravillas2.png' : preview.heroImg;
+                    return imgPath.startsWith('http') || imgPath.startsWith('data:') ? imgPath : `${import.meta.env.BASE_URL.replace(/\/$/, "")}${imgPath}`;
+                  })()}
+                  alt="Visualización del diseño web"
+                  className="w-full h-full object-cover"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none"></div>
+
+              {/* Floating Web UI Simulation elements */}
+              <div className="absolute bottom-4 left-4 right-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div className="max-w-md">
+                  <span className="text-[8px] uppercase font-bold tracking-widest text-nexus-accent bg-nexus-accent/20 border border-nexus-accent/30 px-1.5 py-0.5 rounded">Proyecto Destacado</span>
+                  <h4 className="text-sm md:text-lg font-bold text-white mt-1">
+                    {projectKey === 'residencial' ? 'Residencial Maravillas - Salida Cusco' : preview.title}
+                  </h4>
+                  <p className="text-[9px] text-gray-300 mt-0.5 line-clamp-2">
+                    {projectKey === 'residencial'
+                      ? 'Terrenos con facil acceso vehicular urbano, cuenta con agua dulce y una excelente vista panorámica, a solo 15 minutos del centro de la ciudad de Juliaca.'
+                      : preview.subtitle}
+                  </p>
+                </div>
+                
+                {/* 3 Botones similares premium cian que llevan al scroll suave del recorrido 360 */}
+                {projectKey === 'residencial' ? (
+                  <a
+                    href="#recorrido-360"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('recorrido-360')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                      });
+                    }}
+                    className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
+                  >
+                    <span>Probar Recorrido 360°</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                ) : projectKey === 'industrial' ? (
+                  <a
+                    href="#recorrido-360"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('recorrido-360')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                      });
+                    }}
+                    className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
+                  >
+                    <span>Probar Recorrido Obras</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                ) : projectKey === 'preventa' ? (
+                  <a
+                    href="#recorrido-360"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('recorrido-360')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                      });
+                    }}
+                    className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
+                  >
+                    <span>Probar Demo Preventa 360°</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="text-[10px] text-gray-500 font-sans">Visualización interactiva: La imagen superior emula la estructura de cabecera y hero sección que desarrollaremos para ti.</p>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className={isTourExpanded ? "" : "animate-fade-in-up"}>
@@ -224,194 +406,124 @@ export default function ServiciosInmobiliaria() {
       <section className="container mx-auto px-6 pb-8 relative z-10">
         <div className="max-w-6xl mx-auto">
 
-          {/* Tabs Nav */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-            <button
-              onClick={() => setActiveProject('residencial')}
-              className={`p-6 rounded-3xl text-left transition-all duration-300 border border-white/5 cursor-pointer ${activeProject === 'residencial'
-                  ? 'bg-white text-nexus-dark border-white shadow-xl translate-y-[-4px]'
-                  : 'glass-panel text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
-            >
-              <span className={`text-[10px] font-bold uppercase tracking-wider block mb-2 ${activeProject === 'residencial' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Inmobiliario</span>
-              <h3 className="text-lg font-bold">Proyectos Residenciales</h3>
-              <p className="text-xs mt-2 opacity-80 leading-relaxed">Venta y preventa de Terrenos, casas y condominios campestres con renders e interactivos 3D.</p>
-            </button>
+          {/* DISEÑO EN ESCRITORIO: Pestañas en Grid y Contenedor abajo */}
+          <div className="hidden md:block">
+            {/* Tabs Nav */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+              <button
+                onClick={() => handleTabClick('residencial')}
+                className={`p-6 rounded-3xl text-left transition-all duration-300 border border-white/5 cursor-pointer ${activeProject === 'residencial'
+                    ? 'bg-white text-nexus-dark border-white shadow-xl translate-y-[-4px]'
+                    : 'glass-panel text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                <span className={`text-[10px] font-bold uppercase tracking-wider block mb-2 ${activeProject === 'residencial' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Inmobiliario</span>
+                <h3 className="text-lg font-bold">Proyectos Residenciales</h3>
+                <p className="text-xs mt-2 opacity-80 leading-relaxed">Venta y preventa de Terrenos, casas y condominios campestres con renders e interactivos 3D.</p>
+              </button>
 
-            <button
-              onClick={() => setActiveProject('industrial')}
-              className={`p-6 rounded-3xl text-left transition-all duration-300 border border-white/5 cursor-pointer ${activeProject === 'industrial'
-                  ? 'bg-white text-nexus-dark border-white shadow-xl translate-y-[-4px]'
-                  : 'glass-panel text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
-            >
-              <span className={`text-[10px] font-bold uppercase tracking-wider block mb-2 ${activeProject === 'industrial' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Obras Civiles</span>
-              <h3 className="text-lg font-bold">Constructores & Contratistas</h3>
-              <p className="text-xs mt-2 opacity-80 leading-relaxed">Páginas de solidez institucional, maquetas virtuales 360°, recorridos 3D, maquinaria pesada en obras, obras entregadas e ISOs de seguridad.</p>
-            </button>
+              <button
+                onClick={() => handleTabClick('industrial')}
+                className={`p-6 rounded-3xl text-left transition-all duration-300 border border-white/5 cursor-pointer ${activeProject === 'industrial'
+                    ? 'bg-white text-nexus-dark border-white shadow-xl translate-y-[-4px]'
+                    : 'glass-panel text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                <span className={`text-[10px] font-bold uppercase tracking-wider block mb-2 ${activeProject === 'industrial' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Obras Civiles</span>
+                <h3 className="text-lg font-bold">Constructores & Contratistas</h3>
+                <p className="text-xs mt-2 opacity-80 leading-relaxed">Páginas de solidez institucional, maquetas virtuales 360°, recorridos 3D, maquinaria pesada en obras, obras entregadas e ISOs de seguridad.</p>
+              </button>
 
-            <button
-              onClick={() => setActiveProject('preventa')}
-              className={`p-6 rounded-3xl text-left transition-all duration-300 border border-white/5 cursor-pointer ${activeProject === 'preventa'
-                  ? 'bg-white text-nexus-dark border-white shadow-xl translate-y-[-4px]'
-                  : 'glass-panel text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
-            >
-              <span className={`text-[10px] font-bold uppercase tracking-wider block mb-2 ${activeProject === 'preventa' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Marketing</span>
-              <h3 className="text-lg font-bold">Landings de Preventa y Lotes</h3>
-              <p className="text-xs mt-2 opacity-80 leading-relaxed">Embudos rápidos de captación de clientes potenciales altamente interesados en lanzamientos.</p>
-            </button>
-          </div>
+              <button
+                onClick={() => handleTabClick('preventa')}
+                className={`p-6 rounded-3xl text-left transition-all duration-300 border border-white/5 cursor-pointer ${activeProject === 'preventa'
+                    ? 'bg-white text-nexus-dark border-white shadow-xl translate-y-[-4px]'
+                    : 'glass-panel text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                <span className={`text-[10px] font-bold uppercase tracking-wider block mb-2 ${activeProject === 'preventa' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Marketing</span>
+                <h3 className="text-lg font-bold">Landings de Preventa y Lotes</h3>
+                <p className="text-xs mt-2 opacity-80 leading-relaxed">Embudos rápidos de captación de clientes potenciales altamente interesados en lanzamientos.</p>
+              </button>
+            </div>
 
-          {/* Maqueta Interactiva - Muestra cómo se vería */}
-          <div className="glass-panel border border-white/10 rounded-3xl p-6 md:p-10 animate-fade-in-up mb-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-
-              {/* Contenido / Copys enfocados en el deseo del cliente final */}
-              <div className="lg:col-span-5 flex flex-col gap-6">
-                <div>
-                  <span className="text-xs font-bold text-nexus-purple uppercase tracking-widest bg-nexus-purple/10 px-3 py-1 rounded-full border border-nexus-purple/20">
-                    Así se Estructura tu Sitio Web
-                  </span>
-                  <h2 className="text-2xl md:text-3.5xl font-bold text-white mt-4">
-                    {currentPreview.title}
-                  </h2>
-                  <p className="text-nexus-accent text-sm md:text-base font-medium">
-                    {currentPreview.subtitle}
-                  </p>
-                </div>
-
-                <div className="bg-white/5 border border-white/5 rounded-2xl p-5 italic text-gray-300 text-xs md:text-sm leading-relaxed relative">
-                  <span className="absolute -top-3 left-4 bg-nexus-purple text-white text-xs font-bold px-2.5 py-0.5 rounded uppercase tracking-wider">El Deseo de tu Negocio</span>
-                  {currentPreview.deseosCliente}
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/5 pb-2">Características Clave de Conversión:</h4>
-                  {currentPreview.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5">
-                      <div className="p-1 rounded-full bg-emerald-500/10 text-emerald-400 mt-0.5 border border-emerald-500/20">
-                        <CheckCircle className="w-3.5 h-3.5" />
-                      </div>
-                      <span className="text-xs text-gray-300 leading-relaxed">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Simulación del Mockup de Pantalla */}
-              <div className="lg:col-span-7 flex flex-col gap-4">
-                <div className="bg-[#0b0f19] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
-
-                  {/* Browser Chrome Simulation */}
-                  <div className="bg-[#182035] px-4 py-2 border-b border-white/5 flex items-center gap-2">
-                    <div className="flex gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500 block"></span>
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500 block"></span>
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 block"></span>
-                    </div>
-                    <div className="bg-white/5 rounded-lg text-[10px] text-gray-400 px-6 py-1 mx-auto w-3/4 text-center font-mono overflow-hidden whitespace-nowrap">
-                      https://sierra-capital.com
-                    </div>
-                  </div>
-
-                  {/* Screenshot / Render Content */}
-                  <div className="relative h-64 md:h-[400px] overflow-hidden">
-                    {activeProject === 'preventa' ? (
-                      <div className="relative w-full h-full select-none bg-black">
-                        {/* Interactive House Image Swapper */}
-                        <img
-                          src={(() => {
-                            const imgPath = !topLight && !bottomLight ? '/tour/sinluz.png' :
-                              topLight && !bottomLight ? '/tour/luzarriba.png' :
-                                !topLight && bottomLight ? '/tour/luzabajo.png' :
-                                  '/tour/conluz.jpeg';
-                            return `${import.meta.env.BASE_URL.replace(/\/$/, "")}${imgPath}`;
-                          })()}
-                          alt="Casa interactiva"
-                          className="w-full h-full object-cover transition-all duration-300"
-                        />
-
-                        {/* Interactive Buttons */}
-                        {/* Top Floor Button */}
-                        <button
-                          onClick={() => setTopLight(!topLight)}
-                          className={`absolute top-[30%] left-[45%] -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer ${topLight
-                              ? 'bg-[#182035] text-white hover:bg-[#182035]/80'
-                              : 'bg-white text-black hover:bg-white/95 scale-105'
-                            }`}
-                        >
-                          {topLight ? 'off' : 'on'}
-                        </button>
-
-                        {/* Bottom Floor Button */}
-                        <button
-                          onClick={() => setBottomLight(!bottomLight)}
-                          className={`absolute top-[60%] left-[55%] -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer ${bottomLight
-                              ? 'bg-[#182035] text-white hover:bg-[#182035]/80'
-                              : 'bg-white text-black hover:bg-white/95 scale-105'
-                            }`}
-                        >
-                          {bottomLight ? 'off' : 'on'}
-                        </button>
-                      </div>
-                    ) : (
-                      <img
-                        src={(() => {
-                          const imgPath = activeProject === 'residencial' ? '/tour/fotografiaaereamaravillas2.png' : currentPreview.heroImg;
-                          return imgPath.startsWith('http') || imgPath.startsWith('data:') ? imgPath : `${import.meta.env.BASE_URL.replace(/\/$/, "")}${imgPath}`;
-                        })()}
-                        alt="Visualización del diseño web inmobiliario"
-                        className="w-full h-full object-cover"
-                      />
-
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent pointer-events-none"></div>
-
-                    {/* Floating Web UI Simulation elements */}
-                    <div className="absolute bottom-6 left-6 right-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                      <div className="max-w-md">
-                        <span className="text-[9px] uppercase font-bold tracking-widest text-nexus-accent bg-nexus-accent/20 border border-nexus-accent/30 px-2 py-0.5 rounded">Proyecto Destacado</span>
-                        <h4 className="text-lg md:text-xl font-bold text-white mt-1.5">
-                          {activeProject === 'residencial' ? 'Residencial Maravillas - Salida Cusco' : currentPreview.title}
-                        </h4>
-                        <p className="text-[10px] text-gray-300 mt-1 line-clamp-2">
-                          {activeProject === 'residencial'
-                            ? 'Terrenos con facil acceso vehicular urbano, cuenta con agua dulce y una excelente vista panorámica, a solo 15 minutos del centro de la ciudad de Juliaca.'
-                            : currentPreview.subtitle}
-                        </p>
-                      </div>
-                      {activeProject === 'residencial' ? (
-                        <a
-                          href="#recorrido-360"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('recorrido-360')?.scrollIntoView({
-                              behavior: 'smooth',
-                              block: 'start'
-                            });
-                          }}
-                          className="bg-nexus-accent text-slate-950 font-bold text-xs px-5 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer"
-                        >
-                          <span>Probar Recorrido 360°</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </a>
-                      ) : activeProject === 'preventa' ? (
-                        <button className="bg-nexus-accent text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-white/10 whitespace-nowrap">
-                          <span>Ver Planos 3D</span>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </button>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-xs text-gray-500 font-sans">Visualización interactiva: La imagen superior emula la estructura de cabecera y hero sección que desarrollaremos para ti.</p>
-                </div>
-              </div>
-
+            {/* Maqueta Interactiva - Muestra cómo se vería */}
+            <div id="maqueta-interactiva" className="glass-panel border border-white/10 rounded-3xl p-6 md:p-10 animate-fade-in-up mb-8">
+              {renderDetailContent(activeProject)}
             </div>
           </div>
+
+          {/* DISEÑO EN MÓVILES: Acordeón Interactivo Colapsable */}
+          <div className="block md:hidden space-y-4 mb-12">
+            
+            {/* Acordeón Residencial */}
+            <div id="acordeon-residencial" className="rounded-3xl overflow-hidden border border-white/5 bg-nexus-dark/40">
+              <button
+                onClick={() => handleTabClick('residencial')}
+                className={`w-full p-5 text-left transition-all duration-300 flex justify-between items-center cursor-pointer ${
+                  activeProject === 'residencial' ? 'bg-white text-nexus-dark' : 'glass-panel text-gray-400'
+                }`}
+              >
+                <div>
+                  <span className={`text-[9px] font-bold uppercase tracking-wider block mb-1 ${activeProject === 'residencial' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Inmobiliario</span>
+                  <h3 className="text-base font-bold">Proyectos Residenciales</h3>
+                </div>
+                <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${activeProject === 'residencial' ? 'rotate-90 text-nexus-dark' : 'text-gray-500'}`} />
+              </button>
+              
+              {activeProject === 'residencial' && (
+                <div className="p-4 border-t border-white/10 glass-panel animate-fade-in bg-nexus-dark/60">
+                  {renderDetailContent('residencial')}
+                </div>
+              )}
+            </div>
+
+            {/* Acordeón Industrial */}
+            <div id="acordeon-industrial" className="rounded-3xl overflow-hidden border border-white/5 bg-nexus-dark/40">
+              <button
+                onClick={() => handleTabClick('industrial')}
+                className={`w-full p-5 text-left transition-all duration-300 flex justify-between items-center cursor-pointer ${
+                  activeProject === 'industrial' ? 'bg-white text-nexus-dark' : 'glass-panel text-gray-400'
+                }`}
+              >
+                <div>
+                  <span className={`text-[9px] font-bold uppercase tracking-wider block mb-1 ${activeProject === 'industrial' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Obras Civiles</span>
+                  <h3 className="text-base font-bold">Constructores & Contratistas</h3>
+                </div>
+                <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${activeProject === 'industrial' ? 'rotate-90 text-nexus-dark' : 'text-gray-500'}`} />
+              </button>
+              
+              {activeProject === 'industrial' && (
+                <div className="p-4 border-t border-white/10 glass-panel animate-fade-in bg-nexus-dark/60">
+                  {renderDetailContent('industrial')}
+                </div>
+              )}
+            </div>
+
+            {/* Acordeón Preventa */}
+            <div id="acordeon-preventa" className="rounded-3xl overflow-hidden border border-white/5 bg-nexus-dark/40">
+              <button
+                onClick={() => handleTabClick('preventa')}
+                className={`w-full p-5 text-left transition-all duration-300 flex justify-between items-center cursor-pointer ${
+                  activeProject === 'preventa' ? 'bg-white text-nexus-dark' : 'glass-panel text-gray-400'
+                }`}
+              >
+                <div>
+                  <span className={`text-[9px] font-bold uppercase tracking-wider block mb-1 ${activeProject === 'preventa' ? 'text-nexus-purple' : 'text-nexus-accent'}`}>Sector Marketing</span>
+                  <h3 className="text-base font-bold">Landings de Preventa y Lotes</h3>
+                </div>
+                <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${activeProject === 'preventa' ? 'rotate-90 text-nexus-dark' : 'text-gray-500'}`} />
+              </button>
+              
+              {activeProject === 'preventa' && (
+                <div className="p-4 border-t border-white/10 glass-panel animate-fade-in bg-nexus-dark/60">
+                  {renderDetailContent('preventa')}
+                </div>
+              )}
+            </div>
+
+          </div>
+
         </div>
       </section>
 

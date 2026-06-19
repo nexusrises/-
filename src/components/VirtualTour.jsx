@@ -480,22 +480,41 @@ export default function VirtualTour({
   const toggleFullscreen = async () => {
     if (!containerRef.current) return;
     try {
-      if (!document.fullscreenElement) {
-        await containerRef.current.requestFullscreen();
+      const container = containerRef.current;
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (container.requestFullscreen) {
+          await container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) {
+          await container.webkitRequestFullscreen();
+        } else {
+          // Fallback por CSS para iOS/iPhone
+          setIsFullscreen(true);
+        }
       } else {
-        await document.exitFullscreen();
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          await document.webkitExitFullscreen();
+        } else {
+          setIsFullscreen(false);
+        }
       }
     } catch (err) {
-      console.error("Error al cambiar al modo pantalla completa:", err);
+      console.warn("Fallo en fullscreen nativo, aplicando fallback por CSS:", err);
+      setIsFullscreen(!isFullscreen);
     }
   };
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      setIsFullscreen(!!(document.fullscreenElement || document.webkitFullscreenElement));
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
   }, []);
 
   const compassRef = useRef(null);
@@ -732,7 +751,7 @@ export default function VirtualTour({
       ref={containerRef}
       className={
         isFullscreen
-          ? "w-full h-full z-[99999] bg-[#020617] flex flex-col overflow-hidden"
+          ? "fixed inset-0 w-screen h-screen z-[99999] bg-[#020617] flex flex-col overflow-hidden"
           : isExpanded
           ? "fixed inset-4 md:inset-10 z-[99999] bg-[#020617]/95 backdrop-blur-xl border border-white/15 shadow-[0_0_50px_rgba(0,0,0,0.85)] transition-all duration-300 rounded-3xl overflow-hidden flex flex-col"
           : "w-full h-full relative group/tour transition-all duration-500 overflow-hidden rounded-3xl"
@@ -832,6 +851,19 @@ export default function VirtualTour({
             </button>
           )}
 
+          {/* Botón de Pantalla Completa (Fullscreen) */}
+          <button
+            onClick={toggleFullscreen}
+            className="p-3 rounded-xl glass-panel border border-white/10 text-cyan-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer shadow-lg flex items-center justify-center bg-[#0f172a]/80"
+            title={isFullscreen ? "Salir de pantalla completa" : "Pantalla Completa (Fullscreen)"}
+          >
+            {isFullscreen ? (
+              <Minimize2 className="w-4.5 h-4.5" />
+            ) : (
+              <Maximize2 className="w-4.5 h-4.5" />
+            )}
+          </button>
+
           {/* Botón de Editor Privado (Solo desarrollo) */}
           {isDev && (
             <button
@@ -883,20 +915,7 @@ export default function VirtualTour({
         </div>
       </div>
 
-      {/* Botón de Fullscreen nativo (Esquina inferior derecha) */}
-      <div className="absolute right-6 bottom-6 z-20 flex flex-col gap-2 pointer-events-auto">
-        <button
-          onClick={toggleFullscreen}
-          className="p-3 rounded-xl glass-panel border border-white/15 backdrop-blur-md text-cyan-400 hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl cursor-pointer flex items-center justify-center bg-[#0f172a]/80"
-          title={isFullscreen ? "Salir de pantalla completa" : "Pantalla Completa (Fullscreen)"}
-        >
-          {isFullscreen ? (
-            <Minimize2 className="w-4.5 h-4.5" />
-          ) : (
-            <Maximize2 className="w-4.5 h-4.5" />
-          )}
-        </button>
-      </div>
+
 
 
 
