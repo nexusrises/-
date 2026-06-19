@@ -260,6 +260,23 @@ function HeadingController({ heading, activeSceneKey, controlsRef }) {
   return null;
 }
 
+// Componente de R3F para actualizar la rotación física del Norte Magnético en tiempo real
+function CompassController({ controlsRef, compassRef, northOffset = 0 }) {
+  useFrame((state) => {
+    const controls = controlsRef?.current || state.controls;
+    if (controls && compassRef.current) {
+      const azimuth = controls.getAzimuthalAngle() || 0;
+      // Convertir azimut a grados (0 a 360)
+      const azimuthDeg = (azimuth * 180) / Math.PI;
+      // La aguja apunta al Norte físico relativo a la cámara: azimut + offset de la escena
+      const rotation = azimuthDeg + northOffset;
+      compassRef.current.style.transform = `rotate(${rotation}deg)`;
+    }
+  });
+
+  return null;
+}
+
 // Componente para manejar la rotación y escala compensada por zoom de cada hotspot
 function HotspotGroup({ posicion, posicionTipo, inclinacion, rotacion, escalaZoom, escala, children }) {
   const groupRef = useRef();
@@ -775,6 +792,8 @@ export default function TourEditorPage() {
   const orbitRef = useRef(null);
   // Referencia para capturar la cámara activa de Three.js
   const cameraRef = useRef(null);
+  // Referencia para la brújula en tiempo real
+  const compassRef = useRef(null);
 
   // Referencias para diferenciar click de drag
   const isDraggingHotspot = useRef(false);
@@ -1631,6 +1650,7 @@ export default function TourEditorPage() {
               <FovZoomController zoomFov={zoomFov} setZoomFov={setZoomFov} />
               <CameraRefAssigner cameraRef={cameraRef} />
               <HeadingController heading={activeScene.heading} activeSceneKey={activeSceneKey} controlsRef={orbitRef} />
+              <CompassController controlsRef={orbitRef} compassRef={compassRef} northOffset={activeScene.northOffset || 0} />
             </Canvas>
 
             {/* Menú Contextual (Clic derecho) */}
@@ -1753,6 +1773,45 @@ export default function TourEditorPage() {
                 </button>
               </div>
             )}
+
+            {/* Botón flotante de Brújula (Norte Magnético) */}
+            <div className="absolute top-4 right-4 z-20 pointer-events-auto">
+              <button
+                onClick={() => {
+                  if (!orbitRef.current) return;
+                  const controls = orbitRef.current;
+                  const camera = controls.object;
+                  if (camera) {
+                    const northAngleDeg = activeScene.northOffset || 0;
+                    const azimuth = (northAngleDeg * Math.PI) / 180;
+                    const polar = controls.getPolarAngle() || Math.PI / 2;
+                    const radius = 0.1;
+                    camera.position.x = radius * Math.sin(polar) * Math.sin(azimuth);
+                    camera.position.y = radius * Math.cos(polar);
+                    camera.position.z = radius * Math.sin(polar) * Math.cos(azimuth);
+                    camera.lookAt(0, 0, 0);
+                    controls.target.set(0, 0, 0);
+                    controls.update();
+                  }
+                }}
+                className="group p-2.5 rounded-xl glass-panel border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer shadow-lg flex items-center justify-center relative bg-slate-950/40"
+                title="Norte Magnético. Clic para orientar al Norte"
+              >
+                <div className="w-6 h-6 rounded-full border border-white/25 flex items-center justify-center relative bg-slate-950/40">
+                  <span className="absolute top-[-2.5px] text-[7.5px] font-bold text-red-500 font-mono tracking-tighter">N</span>
+                  <div 
+                    ref={compassRef} 
+                    className="w-full h-full flex items-center justify-center"
+                    style={{ transform: `rotate(${(activeScene.northOffset || 0)}deg)` }}
+                  >
+                    <svg width="8" height="18" viewBox="0 0 8 18" fill="none" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                      <path d="M4 1L7 9H1L4 1Z" fill="#ef4444" />
+                      <path d="M4 17L1 9H7L4 17Z" fill="#cbd5e1" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
 
           {/* Galería Inferior del Recorrido */}

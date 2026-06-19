@@ -97,8 +97,8 @@ function CompassController({ controlsRef, compassRef, northOffset = 0 }) {
       const azimuth = controls.getAzimuthalAngle() || 0;
       // Convertir azimut a grados (0 a 360)
       const azimuthDeg = (azimuth * 180) / Math.PI;
-      // La aguja apunta al Norte físico relativo a la cámara: -azimut + offset de la escena
-      const rotation = -azimuthDeg + northOffset;
+      // La aguja apunta al Norte físico relativo a la cámara: azimut + offset de la escena
+      const rotation = azimuthDeg + northOffset;
       compassRef.current.style.transform = `rotate(${rotation}deg)`;
     }
   });
