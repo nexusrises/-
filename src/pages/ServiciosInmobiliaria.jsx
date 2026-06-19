@@ -312,70 +312,70 @@ export default function ServiciosInmobiliaria() {
                   className="w-full h-full object-cover"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none"></div>
+              <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none"></div>
+            </div>
 
-              {/* Floating Web UI Simulation elements */}
-              <div className="absolute bottom-4 left-4 right-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div className="max-w-md">
-                  <span className="text-[8px] uppercase font-bold tracking-widest text-nexus-accent bg-nexus-accent/20 border border-nexus-accent/30 px-1.5 py-0.5 rounded">Proyecto Destacado</span>
-                  <h4 className="text-sm md:text-lg font-bold text-white mt-1">
-                    {projectKey === 'residencial' ? 'Residencial Maravillas - Salida Cusco' : preview.title}
-                  </h4>
-                  <p className="text-[9px] text-gray-300 mt-0.5 line-clamp-2">
-                    {projectKey === 'residencial'
-                      ? 'Terrenos con facil acceso vehicular urbano, cuenta con agua dulce y una excelente vista panorámica, a solo 15 minutos del centro de la ciudad de Juliaca.'
-                      : preview.subtitle}
-                  </p>
-                </div>
-                
-                {/* 3 Botones similares premium cian que llevan al scroll suave del recorrido 360 */}
-                {projectKey === 'residencial' ? (
-                  <a
-                    href="#recorrido-360"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('recorrido-360')?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                      });
-                    }}
-                    className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
-                  >
-                    <span>Probar Recorrido 360°</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </a>
-                ) : projectKey === 'industrial' ? (
-                  <a
-                    href="#recorrido-360"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('recorrido-360')?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                      });
-                    }}
-                    className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
-                  >
-                    <span>Probar Recorrido Obras</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </a>
-                ) : projectKey === 'preventa' ? (
-                  <a
-                    href="#recorrido-360"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('recorrido-360')?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                      });
-                    }}
-                    className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
-                  >
-                    <span>Probar Demo Preventa 360°</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </a>
-                ) : null}
+            {/* Floating Web UI Simulation elements (Flotante en desktop, secuencial debajo de la imagen en móvil) */}
+            <div className="relative md:absolute md:bottom-4 md:left-4 md:right-4 flex flex-col md:flex-row md:items-end justify-between gap-4 p-4 md:p-0 bg-[#0b0f19] md:bg-transparent">
+              <div className="max-w-md">
+                <span className="text-[8px] uppercase font-bold tracking-widest text-nexus-accent bg-nexus-accent/20 border border-nexus-accent/30 px-1.5 py-0.5 rounded w-fit block mb-1">Proyecto Destacado</span>
+                <h4 className="text-sm md:text-lg font-bold text-white mt-1 leading-tight">
+                  {projectKey === 'residencial' ? 'Residencial Maravillas - Salida Cusco' : preview.title}
+                </h4>
+                <p className="text-[9px] text-gray-300 mt-0.5 line-clamp-2 leading-relaxed">
+                  {projectKey === 'residencial'
+                    ? 'Terrenos con facil acceso vehicular urbano, cuenta con agua dulce y una excelente vista panorámica, a solo 15 minutos del centro de la ciudad de Juliaca.'
+                    : preview.subtitle}
+                </p>
               </div>
+              
+              {/* 3 Botones similares premium cian que llevan al scroll suave del recorrido 360 */}
+              {projectKey === 'residencial' ? (
+                <a
+                  href="#recorrido-360"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('recorrido-360')?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                  }}
+                  className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
+                >
+                  <span>Probar Recorrido 360°</span>
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              ) : projectKey === 'industrial' ? (
+                <a
+                  href="#recorrido-360"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('recorrido-360')?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                  }}
+                  className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
+                >
+                  <span>Probar Recorrido Obras</span>
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              ) : projectKey === 'preventa' ? (
+                <a
+                  href="#recorrido-360"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('recorrido-360')?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                  }}
+                  className="bg-nexus-accent text-slate-950 font-bold text-[10px] px-4 py-2 rounded-xl flex items-center justify-center gap-1.5 shadow-lg border border-[#00f2fe]/30 hover:bg-white hover:text-black transition-all cursor-pointer whitespace-nowrap w-fit self-start md:self-end"
+                >
+                  <span>Probar Demo Preventa 360°</span>
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              ) : null}
             </div>
           </div>
           <div className="text-center">
