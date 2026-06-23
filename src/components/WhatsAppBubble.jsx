@@ -6,9 +6,9 @@ export default function WhatsAppBubble() {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
   const messages = [
-    "¿Tienes dudas? Escríbenos 💡",
-    "¿Tu negocio necesita una web? Pregúntanos aquí 🚀",
-    "Consúltanos gratis 📲",
+    "¿Quieres ver una demo de Visor 360° en tu celular? 🕶️",
+    "Acelera tus preventas con tecnología 3D y Dron 🛸",
+    "Cotiza tu recorrido 360° o lotización interactiva 📲",
     "Hablemos de tu idea sin compromiso 💬"
   ];
 
@@ -29,11 +29,11 @@ export default function WhatsAppBubble() {
         timeoutId = setTimeout(() => runCycle('hide'), 8000);
       } else if (step === 'hide') {
         setShowTooltip(false);
-        // Permanece oculto durante 30 segundos antes de cambiar al siguiente mensaje
+        // Permanece oculto durante 45 segundos antes de cambiar al siguiente mensaje
         timeoutId = setTimeout(() => {
           setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
           runCycle('show');
-        }, 30000);
+        }, 45000);
       }
     };
 
