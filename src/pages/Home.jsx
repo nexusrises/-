@@ -21,10 +21,18 @@ import PhotoSphereViewer from '../components/PhotoSphereViewer';
 
 export default function Home() {
   const [activeProject, setActiveProject] = useState(0);
+  const [activeSector, setActiveSector] = useState(0);
 
   useEffect(() => {
     document.title = "Nexus Rise | Diseño y Desarrollo Web Premium & Visores 360°";
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSector((prev) => (prev + 1) % sectores.length);
+    }, 15000); // Rotación cada 15 segundos
+    return () => clearInterval(timer);
+  }, [activeSector]);
 
   const carouselProyectos = [
     {
@@ -312,40 +320,135 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {sectores.map((sec) => {
-            const Icon = sec.icon;
-            return (
-              <div 
-                key={sec.id}
-                className={`rounded-3xl p-8 flex flex-col justify-between group relative overflow-hidden reveal-on-scroll ${sec.colorClass}`}
-              >
-                <div className={`absolute top-0 right-0 w-64 h-64 ${sec.glowBg} opacity-[0.03] rounded-full blur-[60px]`}></div>
-                <div>
-                  <div className={`p-3 rounded-xl bg-slate-900 border border-white/5 ${sec.colorText} w-fit mb-6 transition-transform group-hover:scale-110 duration-300`}>
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-2xl font-extrabold text-white mb-1.5 font-display tracking-tight">{sec.titulo}</h3>
-                  <h4 className={`text-sm font-bold mb-3.5 font-sans leading-snug ${sec.colorText}`}>{sec.gancho}</h4>
-                  <p 
-                    style={{ textWrap: 'pretty' }} 
-                    className="text-slate-300 text-sm leading-relaxed mb-6 font-sans"
-                  >
-                    {sec.descripcion}
-                  </p>
-                </div>
-                <Link 
-                  to={sec.enlace} 
-                  className={`inline-flex items-center justify-center ${sec.colorBtn} px-5 py-2 rounded-full font-semibold text-xs hover:text-white group w-fit uppercase tracking-wider`}
-                >
-                  {sec.etiquetaBoton}
-                  <ArrowUpRight className="w-3.5 h-3.5 ml-1.5 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </div>
-            );
-          })}
+        {/* Estilos locales para las micro-animaciones premium del carrusel */}
+        <style>{`
+          @keyframes slide-in-left {
+            0% { opacity: 0; transform: translateX(-24px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes slide-in-right {
+            0% { opacity: 0; transform: translateX(24px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes float-icon {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+          }
+          .animate-slide-left {
+            animation: slide-in-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          .animate-slide-right {
+            animation: slide-in-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          .animate-float-icon {
+            animation: float-icon 6s ease-in-out infinite;
+          }
+        `}</style>
 
+        {/* Carrusel de Sectores */}
+        <div className="max-w-5xl mx-auto relative mb-12 group/sec-carousel">
+          <div className={`rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center justify-between group relative overflow-hidden transition-all duration-500 min-h-[380px] ${sectores[activeSector].colorClass}`}>
+            
+            {/* Resplandor de fondo animado */}
+            <div className={`absolute top-0 right-0 w-[400px] h-[400px] ${sectores[activeSector].glowBg} opacity-[0.04] rounded-full blur-[100px]`}></div>
+            
+            {/* Lado Izquierdo: Contenido Informativo */}
+            <div className="flex-1 space-y-5 relative z-10 animate-slide-left" key={`text-${activeSector}`}>
+              <div className={`p-3 rounded-2xl bg-slate-950/85 border border-white/10 ${sectores[activeSector].colorText} w-fit mb-2 shadow-xl`}>
+                {(() => {
+                  const Icon = sectores[activeSector].icon;
+                  return <Icon className="w-8 h-8" />;
+                })()}
+              </div>
+              <h3 className="text-2xl md:text-4xl font-extrabold text-white font-display tracking-tight leading-none">{sectores[activeSector].titulo}</h3>
+              <h4 className={`text-base md:text-lg font-bold font-sans leading-snug ${sectores[activeSector].colorText}`}>{sectores[activeSector].gancho}</h4>
+              <p 
+                style={{ textWrap: 'pretty' }} 
+                className="text-slate-200 text-sm md:text-base leading-relaxed font-sans"
+              >
+                {sectores[activeSector].descripcion}
+              </p>
+              
+              <div className="pt-4 flex items-center gap-3">
+                {/* Flecha Izquierda */}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveSector((prev) => (prev - 1 + sectores.length) % sectores.length);
+                  }}
+                  className="p-3 rounded-full border border-white/10 text-white bg-slate-950/60 hover:bg-slate-900 hover:border-white/20 hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95 cursor-pointer flex-shrink-0"
+                  aria-label="Sector anterior"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                {/* Botón Principal de Enlace */}
+                <Link 
+                  to={sectores[activeSector].enlace} 
+                  className={`inline-flex items-center justify-center ${sectores[activeSector].colorBtn} px-6 py-3.5 rounded-full font-bold text-xs md:text-sm hover:text-white group uppercase tracking-wider shadow-lg transition-all duration-300`}
+                >
+                  {sectores[activeSector].etiquetaBoton}
+                  <ArrowUpRight className="w-4 h-4 ml-2 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+
+                {/* Flecha Derecha */}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveSector((prev) => (prev + 1) % sectores.length);
+                  }}
+                  className="p-3 rounded-full border border-white/10 text-white bg-slate-950/60 hover:bg-slate-900 hover:border-white/20 hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95 cursor-pointer flex-shrink-0"
+                  aria-label="Siguiente sector"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Lado Derecho: Elemento Gráfico Levitante (Premium) */}
+            <div className="hidden md:flex flex-1 justify-center items-center relative z-10 animate-slide-right" key={`visual-${activeSector}`}>
+              <div className="relative group/visual flex justify-center items-center w-full max-w-[280px] aspect-square">
+                {/* Resplandor orbital animado */}
+                <div className={`absolute inset-4 rounded-full bg-gradient-to-tr ${
+                  sectores[activeSector].colorClass.includes('cian') ? 'from-nexus-accent/20 to-cyan-500/10' : 
+                  sectores[activeSector].colorClass.includes('blue') ? 'from-nexus-blue/20 to-indigo-500/10' : 
+                  sectores[activeSector].colorClass.includes('amber') ? 'from-amber-500/20 to-orange-500/10' : 
+                  'from-nexus-purple/20 to-pink-500/10'
+                } opacity-30 blur-2xl animate-pulse`}></div>
+                
+                {/* Anillos orbitales decorativos */}
+                <div className="absolute w-[200px] h-[200px] rounded-full border border-white/5 border-dashed animate-spin [animation-duration:35s]"></div>
+                <div className="absolute w-[240px] h-[240px] rounded-full border border-white/10 border-double animate-spin [animation-duration:18s] [animation-direction:reverse]"></div>
+
+                {/* Caja de visualización flotante */}
+                <div className="w-36 h-36 rounded-3xl bg-slate-900/90 border border-white/10 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover/visual:border-white/20 transition-colors duration-500 animate-float-icon">
+                  <div className={`absolute -bottom-8 -right-8 w-24 h-24 rounded-full ${sectores[activeSector].glowBg} opacity-10 blur-xl`}></div>
+                  {(() => {
+                    const Icon = sectores[activeSector].icon;
+                    return <Icon className={`w-16 h-16 ${sectores[activeSector].colorText} drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-transform duration-700 group-hover/visual:scale-110`} />;
+                  })()}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Indicadores de progreso (Dotted) */}
+          <div className="flex justify-center gap-3 mt-6">
+            {sectores.map((_, idx) => (
+              <button 
+                key={idx}
+                onClick={() => setActiveSector(idx)}
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer hover:bg-white/40 ${
+                  activeSector === idx ? 'w-8 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'w-2.5 bg-white/20'
+                }`}
+                aria-label={`Ir al sector ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Resto del Bento Grid Layout (Estadísticas y Proceso) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {/* Estadísticas de Impacto (Movidas aquí) */}
           <div className="md:col-span-2 glass-panel border-white/5 rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll">
             <div className="absolute top-0 right-0 w-80 h-80 bg-nexus-blue opacity-[0.02] rounded-full blur-[80px]"></div>

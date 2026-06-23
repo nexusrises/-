@@ -6,9 +6,9 @@
       {
         "tipo": "hotspot",
         "posicion": [
-          -16.99,
-          -8,
-          6.89
+          -17,
+          -7.88,
+          6.99
         ],
         "destino": "02_residencial_maravillas_1585",
         "texto": "Maravillas  1",
@@ -30,12 +30,12 @@
       }
     ],
     "heading": {
-      "x": -26,
-      "y": 67
+      "x": -29,
+      "y": 5
     },
     "norteMagnetico": 145,
     "filtro": "normal",
-    "northOffset": 178
+    "northOffset": 193
   },
   "02_residencial_maravillas_1585": {
     "nombre": "Maravillas 1",
@@ -87,15 +87,40 @@
         "colorTexto": "#0006bd",
         "negrita": true,
         "cursiva": false
+      },
+      {
+        "tipo": "lote",
+        "posicion": [
+          -17.76,
+          -6.9,
+          6.09
+        ],
+        "manzana": "B",
+        "lote": "1",
+        "estado": "Vendido",
+        "precio": "45000",
+        "area": "120",
+        "color": "#ef4444",
+        "opacidad": 1,
+        "escala": 1,
+        "inclinacion": 0,
+        "posicionTipo": "2d",
+        "escalaZoom": false,
+        "sombra": true,
+        "fijo": false,
+        "negrita": true,
+        "cursiva": false,
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat"
       }
     ],
     "heading": {
-      "x": -23,
-      "y": 134
+      "x": -10,
+      "y": 123
     },
     "norteMagnetico": 0,
     "filtro": "hdr",
-    "northOffset": 253
+    "northOffset": 261
   },
   "04_mara_ii_mz_c_8506": {
     "nombre": "Maravillas 2",
@@ -175,11 +200,11 @@
       }
     ],
     "heading": {
-      "x": -23,
-      "y": 93
+      "x": -38,
+      "y": 39
     },
     "norteMagnetico": 0,
     "filtro": "bright",
-    "northOffset": 294
+    "northOffset": 322
   }
 }

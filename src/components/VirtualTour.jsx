@@ -97,8 +97,8 @@ function CompassController({ controlsRef, compassRef, northOffset = 0 }) {
       const azimuth = controls.getAzimuthalAngle() || 0;
       // Convertir azimut a grados (0 a 360)
       const azimuthDeg = (azimuth * 180) / Math.PI;
-      // La aguja apunta al Norte físico relativo a la cámara: azimut + offset de la escena
-      const rotation = azimuthDeg + northOffset;
+      // La aguja apunta al Norte físico relativo a la cámara: offset de la escena - azimut
+      const rotation = northOffset - azimuthDeg;
       compassRef.current.style.transform = `rotate(${rotation}deg)`;
     }
   });
@@ -188,6 +188,25 @@ function HotspotGroup({ posicion, posicionTipo, inclinacion, rotacion, escalaZoo
   );
 }
 
+// Funciones de formateo para precio y área
+const formatPrecio = (val) => {
+  if (!val) return '';
+  const clean = String(val).trim();
+  if (/^\d+(\.\d+)?$/.test(clean)) {
+    return `S/. ${clean}`;
+  }
+  return clean;
+};
+
+const formatArea = (val) => {
+  if (!val) return '';
+  const clean = String(val).trim();
+  if (/^\d+(\.\d+)?$/.test(clean)) {
+    return `${clean} m²`;
+  }
+  return clean;
+};
+
 // Visualizador de hotspots interactivos y complementos (texto/imagen)
 function Hotspot({
   posicion,
@@ -215,8 +234,14 @@ function Hotspot({
   mostrarTextoSiempre,
   fontSize,
   nombreDestino,
-  fuente
+  fuente,
+  manzana,
+  lote,
+  estado,
+  precio,
+  area
 }) {
+  const [showTooltip, setShowTooltip] = useState(false);
   const { camera } = useThree();
   // Ref al div contenedor del HTML para toggling de visibilidad sin re-renders
   const visibilityRef = useRef(null);
@@ -392,6 +417,69 @@ function Hotspot({
                   </div>
                 )}
               </div>
+            </div>
+          )}
+
+          {itemTipo === 'lote' && (
+            <div 
+              style={wrapperStyle}
+              className="group relative flex items-center justify-center transition-all duration-300"
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                setShowTooltip(!showTooltip);
+              }}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              {/* Anillo exterior premium con degradado */}
+              <div
+                className="absolute h-10 w-10 rounded-full border backdrop-blur-sm bg-black/10 border-white/40"
+              ></div>
+
+              {/* Botón interactivo central con el color de su estado */}
+              <div
+                className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-white font-black text-xs shadow-lg font-sans"
+                style={{
+                  background: color || '#22c55e',
+                  boxShadow: `0 0 15px ${color || '#22c55e'}`
+                }}
+              >
+                {lote || '1'}
+              </div>
+
+              {/* Etiqueta de texto (Tooltip) */}
+              <div
+                className={`absolute bottom-10 border border-white/10 px-2.5 py-1.5 rounded-xl shadow-2xl z-50 pointer-events-none transition-all duration-300 origin-bottom bg-slate-900/95 text-white font-mono text-[9px] w-max text-center backdrop-blur-sm ${
+                  showTooltip ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                }`}
+              >
+                <strong>Mz {manzana || 'A'} - Lote {lote || '1'}</strong>
+                <span className="block text-[8px] mt-0.5" style={{ color: color }}>
+                  ● {estado || 'Disponible'}
+                </span>
+                {precio && <span className="block text-[8px] text-gray-300 mt-0.5">{formatPrecio(precio)}</span>}
+                {area && <span className="block text-[8px] text-gray-400 mt-0.5">{formatArea(area)}</span>}
+              </div>
+            </div>
+          )}
+
+          {itemTipo === 'manzana' && (
+            <div 
+              style={{ 
+                color: colorTexto || '#ffffff',
+                backgroundColor: colorFondo || '#3b82f6',
+                boxShadow: sombra ? '0 10px 20px rgba(0,0,0,0.45)' : 'none',
+                transform: isTransform ? `scale(${escala ?? 1.0})` : undefined,
+                fontSize: `${fontSize || 13}px`,
+                fontWeight: negrita !== false ? 'bold' : 'normal',
+                fontStyle: cursiva ? 'italic' : 'normal',
+                opacity: opacidad ?? 1.0,
+                scale: escala ?? 1.0,
+                fontFamily: fuente ? `'${fuente}', sans-serif` : "'Montserrat', sans-serif"
+              }}
+              className="px-3.5 py-1.5 rounded-full border border-white/20 backdrop-blur-sm flex items-center justify-center font-bold tracking-wide uppercase w-max select-none pointer-events-auto transition-all duration-300"
+            >
+              <span>{texto || 'MZ'}</span>
             </div>
           )}
         </div>
@@ -799,6 +887,11 @@ export default function VirtualTour({
               nombreDestino={scenes[hs.destino]?.nombre}
               fuente={hs.fuente}
               onNavigate={handleNavigate}
+              manzana={hs.manzana}
+              lote={hs.lote}
+              estado={hs.estado}
+              precio={hs.precio}
+              area={hs.area}
             />
           ))}
         </Suspense>

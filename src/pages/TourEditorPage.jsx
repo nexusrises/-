@@ -268,8 +268,8 @@ function CompassController({ controlsRef, compassRef, northOffset = 0 }) {
       const azimuth = controls.getAzimuthalAngle() || 0;
       // Convertir azimut a grados (0 a 360)
       const azimuthDeg = (azimuth * 180) / Math.PI;
-      // La aguja apunta al Norte físico relativo a la cámara: azimut + offset de la escena
-      const rotation = azimuthDeg + northOffset;
+      // La aguja apunta al Norte físico relativo a la cámara: offset de la escena - azimut
+      const rotation = northOffset - azimuthDeg;
       compassRef.current.style.transform = `rotate(${rotation}deg)`;
     }
   });
@@ -652,6 +652,25 @@ function ProjectImageSelectorModal({ isOpen, onClose, onSelect, tourId, imageSel
   );
 }
 
+// Funciones de formateo para precio y área
+const formatPrecio = (val) => {
+  if (!val) return '';
+  const clean = String(val).trim();
+  if (/^\d+(\.\d+)?$/.test(clean)) {
+    return `S/. ${clean}`;
+  }
+  return clean;
+};
+
+const formatArea = (val) => {
+  if (!val) return '';
+  const clean = String(val).trim();
+  if (/^\d+(\.\d+)?$/.test(clean)) {
+    return `${clean} m²`;
+  }
+  return clean;
+};
+
 export default function TourEditorPage() {
   const { paramTourId } = useParams();
   const [tourId, setTourId] = useState(paramTourId || 'home');
@@ -670,6 +689,7 @@ export default function TourEditorPage() {
 
   const [scenes, setScenes] = useState(initialTourData);
   const [activeSceneKey, setActiveSceneKey] = useState('sala');
+  const [hoveredLoteIndex, setHoveredLoteIndex] = useState(null);
 
   // Estados para el modal personalizado de renombrado de imagen
   const [renameModalOpen, setRenameModalOpen] = useState(false);
@@ -1131,6 +1151,102 @@ export default function TourEditorPage() {
     saveToLocal(updated);
   };
 
+  // Agregar Lote de Terreno nuevo en la escena
+  const handleAddLote = () => {
+    const newLote = {
+      tipo: 'lote',
+      posicion: getSpawnPosition(),
+      manzana: 'A',
+      lote: '1',
+      estado: 'Disponible',
+      precio: '',
+      area: '',
+      color: '#22c55e', // Verde para disponible por defecto
+      opacidad: 1.0,
+      escala: 1.0,
+      inclinacion: 0,
+      posicionTipo: '2d',
+      escalaZoom: false,
+      sombra: true,
+      fijo: false,
+      negrita: true,
+      cursiva: false,
+      mostrarTextoSiempre: true,
+      fuente: 'Montserrat'
+    };
+    const updated = {
+      ...scenes,
+      [activeSceneKey]: {
+        ...activeScene,
+        hotspots: [...(activeScene.hotspots || []), newLote]
+      }
+    };
+    saveToLocal(updated);
+    setActiveHotspotIndex((activeScene.hotspots || []).length);
+    setActiveTab('elementos');
+  };
+
+  // Agregar Manzana nueva en la escena
+  const handleAddManzana = () => {
+    const newManzana = {
+      tipo: 'manzana',
+      posicion: getSpawnPosition(),
+      texto: 'MZ A',
+      colorTexto: '#ffffff',
+      colorFondo: '#3b82f6', // Azul por defecto
+      opacidad: 1.0,
+      escala: 1.0,
+      inclinacion: 0,
+      posicionTipo: '2d',
+      escalaZoom: false,
+      sombra: true,
+      fijo: false,
+      negrita: true,
+      cursiva: false,
+      mostrarTextoSiempre: true,
+      fuente: 'Montserrat'
+    };
+    const updated = {
+      ...scenes,
+      [activeSceneKey]: {
+        ...activeScene,
+        hotspots: [...(activeScene.hotspots || []), newManzana]
+      }
+    };
+    saveToLocal(updated);
+    setActiveHotspotIndex((activeScene.hotspots || []).length);
+    setActiveTab('elementos');
+  };
+
+  // Cambiar cualquier propiedad de un hotspot/elemento de forma genérica
+  const handleFieldChange = (index, field, value) => {
+    const newHotspots = [...activeScene.hotspots];
+    newHotspots[index] = {
+      ...newHotspots[index],
+      [field]: value
+    };
+    
+    // Si se modifica el estado del lote, actualizar automáticamente su color correspondiente
+    if (field === 'estado') {
+      const mapping = {
+        'Disponible': '#22c55e',            // Verde
+        'Reservado con S/. 100': '#f59e0b', // Amarillo
+        'Financiado': '#f97316',            // Naranja
+        'Vendido': '#ef4444'                // Rojo
+      };
+      newHotspots[index].color = mapping[value] || '#22c55e';
+    }
+
+    const updated = {
+      ...scenes,
+      [activeSceneKey]: {
+        ...activeScene,
+        hotspots: newHotspots
+      }
+    };
+    saveToLocal(updated);
+  };
+
   // Modificar Norte Magnético de la escena
   const handleNorteChange = (val) => {
     const updated = {
@@ -1525,11 +1641,14 @@ export default function TourEditorPage() {
                             e.stopPropagation();
                             setActiveHotspotIndex(index);
                             setActiveTab('elementos');
+                            setHoveredLoteIndex(hoveredLoteIndex === index ? null : index);
                             if (hs.fijo) return;
                             isDraggingHotspot.current = true;
                             dragIndex.current = index;
                             setIsDragging(true);
                           }}
+                          onMouseEnter={() => setHoveredLoteIndex(index)}
+                          onMouseLeave={() => setHoveredLoteIndex(null)}
                           onContextMenu={(e) => handleContextMenu(e, index)}
                           onDoubleClick={(e) => {
                             e.stopPropagation();
@@ -1630,6 +1749,66 @@ export default function TourEditorPage() {
                                   <span>Sin imagen</span>
                                 </div>
                               )}
+                            </div>
+                          )}
+
+                          {itemTipo === 'lote' && (
+                            <div 
+                              style={{ 
+                                scale: hs.escala ?? 1.0,
+                                transform: isTransform ? `scale(${hs.escala ?? 1.0})` : undefined,
+                              }}
+                              className="group relative flex items-center justify-center transition-all duration-300"
+                            >
+                              {/* Anillo exterior premium con degrandado */}
+                              <div
+                                className="absolute h-10 w-10 rounded-full border backdrop-blur-sm bg-black/10 border-white/40"
+                              ></div>
+
+                              {/* Botón interactivo central con el color de su estado */}
+                              <div
+                                className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-white font-black text-xs shadow-lg font-sans"
+                                style={{
+                                  background: hs.color || '#22c55e',
+                                  boxShadow: `0 0 15px ${hs.color || '#22c55e'}`
+                                }}
+                              >
+                                {hs.lote || '1'}
+                              </div>
+
+                              {/* Etiqueta de texto (Tooltip) */}
+                              <div
+                                className={`absolute bottom-10 border border-white/10 px-2.5 py-1.5 rounded-xl shadow-2xl z-50 pointer-events-none transition-all duration-300 origin-bottom bg-slate-900/90 text-white font-mono text-[9px] w-max text-center backdrop-blur-sm ${
+                                  hoveredLoteIndex === index ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                                }`}
+                              >
+                                <strong>Mz {hs.manzana || 'A'} - Lote {hs.lote || '1'}</strong>
+                                <span className="block text-[8px] mt-0.5" style={{ color: hs.color }}>
+                                  ● {hs.estado || 'Disponible'}
+                                </span>
+                                {hs.precio && <span className="block text-[8px] text-gray-300 mt-0.5">{formatPrecio(hs.precio)}</span>}
+                                {hs.area && <span className="block text-[8px] text-gray-400 mt-0.5">{formatArea(hs.area)}</span>}
+                              </div>
+                            </div>
+                          )}
+
+                          {itemTipo === 'manzana' && (
+                            <div 
+                              style={{ 
+                                color: hs.colorTexto || '#ffffff',
+                                backgroundColor: hs.colorFondo || '#3b82f6',
+                                boxShadow: hs.sombra ? '0 10px 20px rgba(0,0,0,0.45)' : 'none',
+                                transform: isTransform ? `scale(${hs.escala ?? 1.0})` : undefined,
+                                fontSize: `${hs.fontSize || 13}px`,
+                                fontWeight: hs.negrita !== false ? 'bold' : 'normal',
+                                fontStyle: hs.cursiva ? 'italic' : 'normal',
+                                opacity: hs.opacidad ?? 1.0,
+                                scale: hs.escala ?? 1.0,
+                                fontFamily: hs.fuente ? `'${hs.fuente}', sans-serif` : "'Montserrat', sans-serif"
+                              }}
+                              className="px-3.5 py-1.5 rounded-full border border-white/20 backdrop-blur-sm flex items-center justify-center font-bold tracking-wide uppercase w-max select-none pointer-events-auto transition-all duration-300"
+                            >
+                              <span>{hs.texto || 'MZ'}</span>
                             </div>
                           )}
                         </div>
@@ -2141,6 +2320,38 @@ export default function TourEditorPage() {
                   <ChevronRight className="w-4 h-4 text-gray-500" />
                 </button>
 
+                <button
+                  onClick={handleAddLote}
+                  className="w-full flex items-center justify-between p-4 bg-slate-900 hover:bg-slate-850 border border-white/5 hover:border-emerald-500/30 rounded-2xl transition-all text-left text-xs cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-105 transition-transform">
+                      <Home className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white">Lote de Terreno</h4>
+                      <p className="text-[10px] text-gray-500 mt-0.5">Marcador de lote con estado y color</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-500" />
+                </button>
+
+                <button
+                  onClick={handleAddManzana}
+                  className="w-full flex items-center justify-between p-4 bg-slate-900 hover:bg-slate-850 border border-white/5 hover:border-cyan-500/30 rounded-2xl transition-all text-left text-xs cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:scale-105 transition-transform">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white">Etiqueta de Manzana</h4>
+                      <p className="text-[10px] text-gray-500 mt-0.5">Identificador de manzana con color personalizado</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-500" />
+                </button>
+
                 <p className="text-[9px] text-gray-500 italic mt-6 leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
                   💡 Los elementos nuevos se insertarán directamente en el centro de tu campo visual actual. Podrás arrastrarlos libremente por la pantalla para reubicarlos.
                 </p>
@@ -2186,10 +2397,28 @@ export default function TourEditorPage() {
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
                               <span className="text-[10px] font-bold font-mono text-amber-400/80">#{index + 1}</span>
-                              <span className="font-semibold text-white/90 truncate max-w-[150px]">
+                              <span className="font-semibold text-white/90 truncate max-w-[170px] flex items-center gap-1.5">
                                 {itemTipo === 'hotspot' && `🔗 Conexión: ${hs.destino}`}
                                 {itemTipo === 'texto' && `📝 Texto: ${hs.texto}`}
                                 {itemTipo === 'imagen' && `🖼️ Imagen`}
+                                {itemTipo === 'lote' && (
+                                  <>
+                                    <span 
+                                      className="w-2 h-2 rounded-full inline-block shrink-0 animate-pulse" 
+                                      style={{ backgroundColor: hs.color || '#22c55e' }}
+                                    />
+                                    <span>🏡 Lote Mz {hs.manzana || 'A'}-{hs.lote || '1'}</span>
+                                  </>
+                                )}
+                                {itemTipo === 'manzana' && (
+                                  <>
+                                    <span 
+                                      className="w-2 h-2 rounded-full inline-block shrink-0" 
+                                      style={{ backgroundColor: hs.colorFondo || '#3b82f6' }}
+                                    />
+                                    <span>🏷️ Mz: {hs.texto}</span>
+                                  </>
+                                )}
                               </span>
                             </div>
                             <ChevronRight className="w-4 h-4 text-gray-500 group-hover:text-amber-400 transition-colors" />
@@ -2212,6 +2441,8 @@ export default function TourEditorPage() {
                                 {itemTipo === 'hotspot' && 'Conexión'}
                                 {itemTipo === 'texto' && 'Texto'}
                                 {itemTipo === 'imagen' && 'Imagen'}
+                                {itemTipo === 'lote' && 'Lote'}
+                                {itemTipo === 'manzana' && 'Manzana'}
                               </span>
                             </div>
                             <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
@@ -2258,7 +2489,7 @@ export default function TourEditorPage() {
                               >
                                 Contenido
                               </button>
-                              {(itemTipo === 'hotspot' || itemTipo === 'texto') && (
+                              {(itemTipo === 'hotspot' || itemTipo === 'texto' || itemTipo === 'manzana') && (
                                 <button
                                   type="button"
                                   onClick={() => setActiveHotspotTab('estilo')}
@@ -2513,23 +2744,108 @@ export default function TourEditorPage() {
                                     </div>
                                   </>
                                 )}
+
+                                {itemTipo === 'lote' && (
+                                  <>
+                                    <div className="space-y-3">
+                                      <div className="space-y-1">
+                                        <label className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Letra de la Manzana</label>
+                                        <input 
+                                          type="text" 
+                                          value={hs.manzana || ''} 
+                                          onChange={(e) => handleFieldChange(index, 'manzana', e.target.value.toUpperCase())}
+                                          className="w-full bg-slate-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-amber-400 font-semibold"
+                                          placeholder="ej: A, B, C..."
+                                        />
+                                      </div>
+
+                                      <div className="space-y-1">
+                                        <label className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Número de Lote</label>
+                                        <input 
+                                          type="text" 
+                                          value={hs.lote || ''} 
+                                          onChange={(e) => handleFieldChange(index, 'lote', e.target.value)}
+                                          className="w-full bg-slate-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-amber-400 font-semibold"
+                                          placeholder="ej: 1, 2, 3..."
+                                        />
+                                      </div>
+
+                                      <div className="space-y-1">
+                                        <label className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Estado de Disponibilidad</label>
+                                        <select
+                                          value={hs.estado || 'Disponible'}
+                                          onChange={(e) => handleFieldChange(index, 'estado', e.target.value)}
+                                          className="w-full bg-slate-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-amber-400 font-semibold cursor-pointer"
+                                        >
+                                          <option value="Disponible">Disponible (🟢 Verde)</option>
+                                          <option value="Reservado con S/. 100">Reservado con S/. 100 (🟡 Amarillo)</option>
+                                          <option value="Financiado">Financiado (🟠 Naranja)</option>
+                                          <option value="Vendido">Vendido (🔴 Rojo)</option>
+                                        </select>
+                                      </div>
+
+                                      <div className="space-y-1">
+                                        <label className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Precio (Opcional)</label>
+                                        <input 
+                                          type="text" 
+                                          value={hs.precio || ''} 
+                                          onChange={(e) => handleFieldChange(index, 'precio', e.target.value)}
+                                          className="w-full bg-slate-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-amber-400 font-semibold"
+                                          placeholder="ej: S/. 45,000"
+                                        />
+                                      </div>
+
+                                      <div className="space-y-1">
+                                        <label className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Área m² (Opcional)</label>
+                                        <input 
+                                          type="text" 
+                                          value={hs.area || ''} 
+                                          onChange={(e) => handleFieldChange(index, 'area', e.target.value)}
+                                          className="w-full bg-slate-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-amber-400 font-semibold"
+                                          placeholder="ej: 120 m²"
+                                        />
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
+
+                                {itemTipo === 'manzana' && (
+                                  <>
+                                    <div className="space-y-3">
+                                      <div className="space-y-1">
+                                        <label className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Nombre / Letra de la Manzana</label>
+                                        <input 
+                                          type="text" 
+                                          value={hs.texto || ''} 
+                                          onChange={(e) => handleFieldChange(index, 'texto', e.target.value)}
+                                          className="w-full bg-slate-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white outline-none focus:border-amber-400 font-semibold"
+                                          placeholder="ej: MZ A, MANZANA B..."
+                                        />
+                                      </div>
+                                      
+                                      <p className="text-[9px] text-gray-500 italic mt-4 leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
+                                        💡 Puedes personalizar el color de fondo, color del texto, tamaño y fuente de este elemento en la pestaña superior "Estilo".
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             )}
 
                             {/* SUB-PESTAÑA 2: ESTILO */}
-                            {activeHotspotTab === 'estilo' && (itemTipo === 'hotspot' || itemTipo === 'texto') && (
+                            {activeHotspotTab === 'estilo' && (itemTipo === 'hotspot' || itemTipo === 'texto' || itemTipo === 'manzana') && (
                               <div className="space-y-2.5 animate-fade-in">
                                 {/* Tamaño de Letra */}
                                 <div className="space-y-1">
                                   <div className="flex justify-between items-center text-[9px] font-bold text-gray-400 uppercase tracking-wider">
                                     <span>Tamaño de Letra</span>
-                                    <span className="font-mono text-white">{hs.fontSize || (itemTipo === 'texto' ? 14 : 10)}px</span>
+                                    <span className="font-mono text-white">{hs.fontSize || (itemTipo === 'texto' ? 14 : (itemTipo === 'manzana' ? 13 : 10))}px</span>
                                   </div>
                                   <input 
                                     type="range"
                                     min="10"
                                     max="40"
-                                    value={hs.fontSize || (itemTipo === 'texto' ? 14 : 10)}
+                                    value={hs.fontSize || (itemTipo === 'texto' ? 14 : (itemTipo === 'manzana' ? 13 : 10))}
                                     onChange={(e) => {
                                       const newHotspots = [...activeScene.hotspots];
                                       newHotspots[index].fontSize = parseInt(e.target.value);
