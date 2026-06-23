@@ -308,6 +308,9 @@ function Hotspot({
                   onNavigate(destino);
                 }
               }}
+              onPointerDown={(e) => {
+                e.stopPropagation();
+              }}
               style={wrapperStyle}
               className={`group relative flex items-center justify-center transition-all duration-300 focus:outline-none ${(destino && destino !== '_self') ? 'cursor-pointer hover:scale-110 active:scale-95' : 'cursor-default'
                 }`}
@@ -915,6 +918,7 @@ export default function VirtualTour({
       <div
         className={`absolute inset-0 bg-slate-950 transition-opacity duration-500 pointer-events-none z-30 ${isTransitioning ? 'opacity-100' : 'opacity-0'
           }`}
+        style={{ display: isTransitioning ? 'block' : 'none' }}
       />
 
       {/* Panel Superior de Control de Escena */}

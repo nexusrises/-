@@ -199,27 +199,35 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Columna 4: Suscribirse / Newsletter (ocupa 3 de 12 columnas) */}
+        {/* Columna 4: Asesoría e Ideas (Enlaces de contacto premium) */}
         <div className="flex flex-col gap-4 md:col-span-3">
           <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Asesoría e Ideas</h3>
           <p className="text-sm text-gray-400 leading-relaxed">
-            Recibe estrategias digitales exclusivas para impulsar las ventas de tu negocio.
+            ¿Tienes dudas sobre tu proyecto? Escríbenos directamente para recibir asesoría personalizada e impulsar las ventas de tu negocio.
           </p>
-          <form className="relative flex items-center" onSubmit={(e) => e.preventDefault()}>
-            <input 
-              type="email" 
-              placeholder="Tu correo electrónico" 
-              className="w-full bg-white/5 border border-white/10 text-white rounded-full py-2.5 pl-4 pr-12 text-sm focus:outline-none focus:border-nexus-accent/50 transition-colors"
-              required 
-            />
-            <button 
-              type="submit" 
-              className="absolute right-1 p-2 bg-nexus-accent hover:bg-blue-600 text-white rounded-full transition-colors"
-              aria-label="Suscribirse"
+          <div className="flex flex-col gap-3.5">
+            {/* Botón WhatsApp */}
+            <a 
+              href="https://wa.me/51951300535?text=Hola%20Nexus%20Rise,%20me%20gustaría%20solicitar%20asesoría%20para%20mi%20proyecto%20web" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold hover:bg-emerald-500/20 hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] group cursor-pointer text-sm"
             >
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
+              <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.968C16.574 2.012 14.101.99 11.482.99 6.047.99 1.624 5.361 1.62 10.79c-.001 1.705.452 3.37 1.312 4.822l-1.02 3.725 3.818-1.002c1.47.804 3.078 1.228 4.707 1.229H12c-.002 0-.002 0 0 0zm6.985-7.797c-.382-.191-2.263-1.117-2.612-1.244-.349-.127-.603-.191-.856.191-.253.382-.98 1.244-1.202 1.503-.221.258-.443.287-.825.096-1.928-.962-3.197-2.115-4.148-3.751-.253-.437-.028-.675.186-.889.192-.192.382-.446.572-.669.19-.223.253-.382.381-.637.127-.255.063-.478-.032-.669-.095-.191-.856-2.07-1.171-2.831-.307-.741-.619-.64-.856-.652-.221-.01-.475-.013-.728-.013-.253 0-.665.095-.1.013-.349-.382-1.189-1.244-1.189-2.736s.792-2.931.951-3.122c.159-.191 1.559-2.381 3.778-3.342 2.22-.962 2.22-.64 2.6-.603.381.037 1.268.519 1.446 1.02.178.5.178.929.127 1.02-.051.09-.253.191-.637.382z" />
+              </svg>
+              <span>Consultar por WhatsApp</span>
+            </a>
+
+            {/* Botón Correo */}
+            <a 
+              href="mailto:contacto@nexusrise.com" 
+              className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-2xl bg-nexus-purple/10 border border-nexus-purple/30 text-nexus-purple font-bold hover:bg-nexus-purple/20 hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.05)] hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] group cursor-pointer text-sm"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Enviar Correo</span>
+            </a>
+          </div>
         </div>
       </div>
       )}

@@ -22,6 +22,7 @@ import PhotoSphereViewer from '../components/PhotoSphereViewer';
 export default function Home() {
   const [activeProject, setActiveProject] = useState(0);
   const [activeSector, setActiveSector] = useState(0);
+  const [activePilar, setActivePilar] = useState(0);
 
   useEffect(() => {
     document.title = "Nexus Rise | Diseño y Desarrollo Web Premium & Visores 360°";
@@ -29,10 +30,17 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveSector((prev) => (prev + 1) % sectores.length);
+      setActiveSector((prev) => (prev + 1) % proyectosDestacados.length);
     }, 15000); // Rotación cada 15 segundos
     return () => clearInterval(timer);
   }, [activeSector]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActivePilar((prev) => (prev + 1) % pilaresValor.length);
+    }, 15000); // Rotación cada 15 segundos
+    return () => clearInterval(timer);
+  }, [activePilar]);
 
   const carouselProyectos = [
     {
@@ -101,14 +109,14 @@ export default function Home() {
     setActiveProject((prev) => (prev - 1 + carouselProyectos.length) % carouselProyectos.length);
   };
 
-  const sectores = [
+  const proyectosDestacados = [
     {
-      id: "inmobiliarias",
-      titulo: "Constructoras & Inmobiliarias",
-      gancho: "Consolida tu presencia corporativa y vende con seguridad.",
-      descripcion: "Diseñamos plataformas corporativas interactivas con visores 360° integrados. Posiciona tus proyectos inmobiliarios directamente en Google y redes sociales, brindando una presentación estructurada que inspire confianza y concrete preventas.",
-      enlace: "/servicios/Constructoras&Inmobiliarias",
-      etiquetaBoton: "Ver Presencia Inmobiliaria",
+      id: "inmobiliaria",
+      titulo: "Sierra Capital - Inmobiliaria 360°",
+      gancho: "Ventas y reservas virtuales seguras gracias a la tecnología 360°.",
+      descripcion: "¿Compradores que dudan de invertir en planos por temor a la informalidad? Sierra Capital implementó un portal corporativo interactivo 360°. Al mostrar de forma transparente los linderos, accesos y vías reales, transmitió la seguridad de una empresa formal, logrando reservas seguras y un +40% en ventas virtuales.",
+      enlace: "/portafolio",
+      etiquetaBoton: "Ver Proyecto Inmobiliario",
       colorClass: "card-neon-cian animate-pulse-glow-cian",
       glowBg: "bg-nexus-accent",
       colorText: "text-nexus-accent",
@@ -117,49 +125,108 @@ export default function Home() {
       icon: Building2
     },
     {
-      id: "clinicas",
-      titulo: "Clínicas & Centros Médicos",
-      gancho: "Establece tu reputación digital y destaca tu especialidad.",
-      descripcion: "Creamos portales de salud corporativos que organizan tus especialidades médicas. Más allá de un agendador, estructuramos un perfil digital confiable y bien segmentado para que los pacientes te elijan con la seguridad que otorga una marca consolidada.",
-      enlace: "/servicios/Clínicas&CentrosMédicos",
+      id: "salud",
+      titulo: "Centro Ginecólogo Especializado \"Santa Rosa\"",
+      gancho: "Prestigio digital que reduce el ausentismo de pacientes.",
+      descripcion: "¿Pacientes que eligen a tu competencia porque su negocio se ve más consolidado en internet? Diseñamos una vitrina digital que reúne las credenciales del staff médico y testimonios reales de pacientes. Esta presencia formal brindó seguridad inmediata, logrando reducir el ausentismo en 35%.",
+      enlace: "/portafolio",
       etiquetaBoton: "Ver Portal de Salud",
       colorClass: "card-neon-blue animate-pulse-glow-blue",
       glowBg: "bg-nexus-blue",
       colorText: "text-nexus-blue",
       colorBtn: "btn-neon-blue",
-      imagen: "/salud_portal_juliaca.png",
+      imagen: "/tour/clinica_thumb.png",
       icon: HeartPulse
     },
     {
-      id: "empresas",
-      titulo: "Empresas & Comercios",
-      gancho: "El núcleo independiente de tu identidad comercial en la web.",
-      descripcion: "Desarrollamos páginas corporativas premium y catálogos digitales interactivos. Asegura que tu negocio sea el primero en aparecer cuando busquen tus productos en Google, construyendo una presencia sólida que brinde tranquilidad a tus clientes.",
-      enlace: "/servicios/empresas&comercios",
-      etiquetaBoton: "Ver Presencia Corporativa",
+      id: "comercio",
+      titulo: "E-commerce Café Delicias del Misti",
+      gancho: "Multiplica tus ventas con una pasarela de pago segura.",
+      descripcion: "¿Clientes que abandonan la compra al no encontrar una forma de pago segura y formal? Café Delicias implementó una tienda corporativa propia. Al contar con un sistema de pagos seguro y un catálogo profesional, eliminaron toda desconfianza, multiplicando su valor de marca e incrementando en +180% sus ventas directas.",
+      enlace: "/portafolio",
+      etiquetaBoton: "Ver E-commerce Café",
       colorClass: "card-neon-amber animate-pulse-glow-amber",
       glowBg: "bg-amber-500",
       colorText: "text-amber-400",
       colorBtn: "btn-neon-amber",
-      imagen: "/constructora_v2.png",
+      imagen: "/tour/mypes_thumb.png",
       icon: Briefcase
     },
     {
       id: "profesionales",
-      titulo: "Profesionales & Consultores",
-      gancho: "Diferénciate del resto con un perfil digital segmentado.",
-      descripcion: "Construimos portafolios corporativos y blogs de autoridad que reflejan tu trayectoria. Genera la credibilidad que buscan tus clientes corporativos y de alto valor al contar con un dominio propio y correos corporativos que garantizan seriedad.",
-      enlace: "/servicios/Profesionales&Consultores",
+      titulo: "Estudio Jurídico Apaza & Asociados",
+      gancho: "Solvencia corporativa y más de 50 contratos premium cerrados.",
+      descripcion: "¿Tu firma jurídica pierde credibilidad al no contar con un perfil profesional segmentado? Diseñamos un portal corporativo para el Estudio Apaza. Al estructurar su trayectoria y casos ganados, proyectaron el respaldo legal necesario para cerrar más de 50 contratos corporativos premium en su primer mes.",
+      enlace: "/portafolio",
       etiquetaBoton: "Ver Marca Personal",
       colorClass: "card-neon-purple animate-pulse-glow-purple",
       glowBg: "bg-nexus-purple",
       colorText: "text-nexus-purple",
       colorBtn: "btn-neon-purple",
-      imagen: "/legal_portal_preview.png",
+      imagen: "/tour/abogado_thumb.png",
       icon: Users
     }
   ];
 
+  const pilaresValor = [
+    {
+      id: 'velocidad',
+      titulo: 'La Velocidad: "El tiempo de espera de tus clientes" ⚡',
+      significado: 'Es el tiempo que tarda tu página web en abrirse en la pantalla de un celular cuando alguien hace clic en ella.',
+      analogia: 'Imagina que un cliente entra a tu oficina física o consultorio, toca la puerta y tú tardas 10 minutos en abrirle. Lo más probable es que se aburra, se dé la vuelta y se vaya con la competencia. En internet pasa igual si tu web es lenta.',
+      beneficios: [
+        'No pierdes dinero en publicidad: Si pagas anuncios en Facebook y la gente hace clic, pero tu web tarda en cargar, el cliente se va. Una web ultra-rápida asegura que aproveches cada centavo de tu inversión publicitaria.',
+        'Google te recomienda: A Google le encantan los negocios rápidos y premia a las webs veloces mostrándolas más arriba en las búsquedas.'
+      ],
+      imagen: '/velocidad_web.png',
+      colorText: 'text-nexus-accent',
+      borderColor: 'border-nexus-accent/20 hover:border-nexus-accent/40',
+      glowColor: 'hover:shadow-[0_0_30px_rgba(0,242,254,0.15)]',
+      gradient: 'from-nexus-accent/10 via-transparent to-transparent'
+    },
+    {
+      id: 'diseno-movil',
+      titulo: 'El Diseño Móvil: "La comodidad de atender en el celular" 📱',
+      significado: 'Que tu página web se acomode y se lea perfectamente en la pantalla de cualquier celular, sin que las letras salgan chiquitas o los botones se amontonen.',
+      analogia: 'Es como tener una puerta de entrada en tu local que es tan pequeña o estrecha que los clientes tienen que agacharse o empujar con fuerza para poder entrar. Terminarán yéndose por pura incomodidad.',
+      beneficios: [
+        'Captas al cliente en su momento de decisión: El 90% de las personas busca terrenos, casas o médicos desde su celular mientras viaja, almuerza o descansa. Si tu web se ve perfecta en el teléfono, el cliente te puede escribir o reservar una cita con un solo toque de su dedo.'
+      ],
+      imagen: '/diseno_movil.png',
+      colorText: 'text-emerald-400',
+      borderColor: 'border-emerald-500/20 hover:border-emerald-500/40',
+      glowColor: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]',
+      gradient: 'from-emerald-500/10 via-transparent to-transparent'
+    },
+    {
+      id: 'seo-local',
+      titulo: 'El SEO Local: "Tu letrero luminoso en la avenida principal de Google" 🗺️',
+      significado: 'Lograr que tu negocio aparezca en los primeros lugares de Google cuando la gente busca los servicios que ofreces en tu ciudad (por ejemplo, buscar: "clínica de partos en Juliaca" o "terrenos en venta").',
+      analogia: 'Si tu negocio no aparece en Google, es como si tu local estuviera escondido al fondo de un callejón oscuro sin ningún letrero. El SEO local es como poner un letrero luminoso gigante en la avenida más transitada de la ciudad.',
+      beneficios: [
+        'Clientes gratis todos los días: No tienes que pagarle publicidad a Facebook ni repartir folletos en la calle. Los clientes que ya tienen la necesidad de comprar te buscarán en Google, te encontrarán a ti primero y te llamarán directamente. Es publicidad automática y gratuita.'
+      ],
+      imagen: '/seo_local.png',
+      colorText: 'text-amber-400',
+      borderColor: 'border-amber-500/20 hover:border-amber-500/40',
+      glowColor: 'hover:shadow-[0_0_30px_rgba(245,158,11,0.15)]',
+      gradient: 'from-amber-500/10 via-transparent to-transparent'
+    },
+    {
+      id: 'seguridad',
+      titulo: 'La Seguridad y Confianza: "El candado de seguridad de tu negocio" 🔒',
+      significado: 'Es el pequeño candado verde que sale al costado de la dirección de tu web en internet. Asegura que nadie pueda espiar o robar la información que tus clientes escriben en tu página.',
+      analogia: 'Es como tener un consultorio o caseta con paredes seguras y un archivador con llave para las historias clínicas o contratos de tus clientes, en lugar de tener los papeles tirados en la calle a la vista de todos.',
+      beneficios: [
+        'Evitas alertas de peligro: Si tu web no es segura, Google le mostrará un aviso gigante en rojo al cliente que dice: "Sitio web peligroso", lo cual destruye la reputación de tu marca de inmediato. El candado de seguridad le dice al cliente: "Esta es una empresa formal y seria en la que puedes confiar".'
+      ],
+      imagen: '/seguridad_web.png',
+      colorText: 'text-nexus-purple',
+      borderColor: 'border-nexus-purple/20 hover:border-nexus-purple/40',
+      glowColor: 'hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]',
+      gradient: 'from-nexus-purple/10 via-transparent to-transparent'
+    }
+  ];
 
   return (
     <div className="relative">
@@ -306,157 +373,147 @@ export default function Home() {
       </section>
 
 
-      {/* 3. SECCIÓN DE SECTORES / BENTO GRID */}
+      {/* 3. SECCIÓN: CLAVES DEL ÉXITO WEB PARA TU NEGOCIO (CARRUSEL INTERACTIVO) */}
       <section className="container mx-auto px-6 pb-28 reveal-on-scroll">
         <div className="text-center mb-16">
-          <span className="text-xs uppercase text-nexus-purple font-bold tracking-widest bg-nexus-purple/10 px-3 py-1 rounded-full border border-nexus-purple/20">Especialización de Alto Impacto</span>
+          <span className="text-xs uppercase text-nexus-accent font-bold tracking-widest bg-nexus-accent/10 px-3 py-1 rounded-full border border-nexus-accent/20">Conceptos Clave</span>
           <h2 
             style={{ textWrap: 'balance' }} 
             className="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 font-display"
           >
-            Soluciones Web por Sectores
+            Lo que tu Negocio Necesita para Triunfar en Internet
           </h2>
           <p 
             style={{ textWrap: 'pretty' }} 
             className="text-gray-200 max-w-2xl mx-auto text-sm md:text-base"
           >
-            Diseñamos arquitecturas específicas y optimizadas que resuelven los problemas reales de tu industria, maximizando la retención de usuarios y la conversión de clientes.
+            Explicado de manera sencilla, con analogías reales y beneficios directos para ti como empresario.
           </p>
         </div>
 
-        {/* Estilos locales para las micro-animaciones premium del carrusel */}
-        <style>{`
-          @keyframes slide-in-left {
-            0% { opacity: 0; transform: translateX(-24px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes slide-in-right {
-            0% { opacity: 0; transform: translateX(24px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes float-icon {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(2deg); }
-          }
-          .animate-slide-left {
-            animation: slide-in-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-          .animate-slide-right {
-            animation: slide-in-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-          .animate-float-icon {
-            animation: float-icon 6s ease-in-out infinite;
-          }
-        `}</style>
-
-        {/* Carrusel de Sectores */}
-        <div className="max-w-5xl mx-auto relative mb-12 group/sec-carousel">
-          <div className={`rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center justify-between group relative overflow-hidden transition-all duration-500 min-h-[380px] ${sectores[activeSector].colorClass}`}>
+        <div className="max-w-5xl mx-auto relative group/pilar-carousel mb-12">
+          {/* Tarjeta del pilar activo */}
+          <div className={`rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center justify-between group relative overflow-hidden transition-all duration-500 min-h-[420px] ${pilaresValor[activePilar].colorText.includes('accent') ? 'card-neon-cian animate-pulse-glow-cian' : pilaresValor[activePilar].colorText.includes('emerald') ? 'card-neon-blue animate-pulse-glow-blue' : pilaresValor[activePilar].colorText.includes('amber') ? 'card-neon-amber animate-pulse-glow-amber' : 'card-neon-purple animate-pulse-glow-purple'} bg-gradient-to-br ${pilaresValor[activePilar].gradient} to-transparent border ${pilaresValor[activePilar].borderColor}`}>
             
             {/* Resplandor de fondo animado */}
-            <div className={`absolute top-0 right-0 w-[400px] h-[400px] ${sectores[activeSector].glowBg} opacity-[0.04] rounded-full blur-[100px]`}></div>
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/5 opacity-[0.02] rounded-full blur-[100px]"></div>
             
             {/* Lado Izquierdo: Contenido Informativo */}
-            <div className="flex-1 space-y-5 relative z-10 animate-slide-left" key={`text-${activeSector}`}>
-              <div className={`p-3 rounded-2xl bg-slate-950/85 border border-white/10 ${sectores[activeSector].colorText} w-fit mb-2 shadow-xl`}>
-                {(() => {
-                  const Icon = sectores[activeSector].icon;
-                  return <Icon className="w-8 h-8" />;
-                })()}
-              </div>
-              <h3 className="text-2xl md:text-4xl font-extrabold text-white font-display tracking-tight leading-none">{sectores[activeSector].titulo}</h3>
-              <h4 className={`text-base md:text-lg font-bold font-sans leading-snug ${sectores[activeSector].colorText}`}>{sectores[activeSector].gancho}</h4>
-              <p 
-                style={{ textWrap: 'pretty' }} 
-                className="text-slate-200 text-sm md:text-base leading-relaxed font-sans"
-              >
-                {sectores[activeSector].descripcion}
-              </p>
+            <div className="flex-1 space-y-5 relative z-10 animate-slide-left" key={`text-pilar-${activePilar}`}>
+              <h3 className={`text-2xl md:text-3xl font-extrabold text-white font-display tracking-tight leading-snug flex items-center gap-2 ${pilaresValor[activePilar].colorText}`}>
+                {pilaresValor[activePilar].titulo}
+              </h3>
               
-              <div className="pt-4 flex items-center justify-between w-full">
-                {/* Flecha Izquierda */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveSector((prev) => (prev - 1 + sectores.length) % sectores.length);
-                  }}
-                  className="p-3 rounded-full border border-white/10 text-white bg-slate-950/60 hover:bg-slate-900 hover:border-white/20 hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95 cursor-pointer flex-shrink-0"
-                  aria-label="Sector anterior"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
+              <div className="space-y-4">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">¿Qué significa?</span>
+                  <p className="text-gray-200 text-sm md:text-base leading-relaxed">
+                    {pilaresValor[activePilar].significado}
+                  </p>
+                </div>
 
-                {/* Botón Principal de Enlace (Sin icono ArrowUpRight y responsivo) */}
+                {/* La Analogía */}
+                <div className="p-4 rounded-2xl bg-slate-950/50 border border-white/5 border-l-4" style={{ borderLeftColor: pilaresValor[activePilar].colorText.includes('accent') ? '#00f2fe' : pilaresValor[activePilar].colorText.includes('emerald') ? '#10b981' : pilaresValor[activePilar].colorText.includes('amber') ? '#f59e0b' : '#a855f7' }}>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block mb-1">La analogía de la vida real:</span>
+                  <p className="text-gray-300 text-xs md:text-sm italic leading-relaxed">
+                    "{pilaresValor[activePilar].analogia}"
+                  </p>
+                </div>
+
+                {/* Beneficios */}
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-2">¿Cómo te beneficia como empresario?</span>
+                  <ul className="space-y-3">
+                    {pilaresValor[activePilar].beneficios.map((beneficio, bIdx) => (
+                      <li key={bIdx} className="text-gray-300 text-xs md:text-sm leading-relaxed flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: pilaresValor[activePilar].colorText.includes('accent') ? '#00f2fe' : pilaresValor[activePilar].colorText.includes('emerald') ? '#10b981' : pilaresValor[activePilar].colorText.includes('amber') ? '#f59e0b' : '#a855f7' }}></span>
+                        <span>{beneficio}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Botón a Portafolio */}
+              <div className="pt-4">
                 <Link 
-                  to={sectores[activeSector].enlace} 
-                  className={`flex-1 md:flex-initial text-center justify-center ${sectores[activeSector].colorBtn} px-4 md:px-8 py-3.5 rounded-full font-bold text-xs md:text-sm hover:text-white group uppercase tracking-wider shadow-lg transition-all duration-300`}
+                  to="/portafolio" 
+                  className={`inline-flex items-center justify-center px-6 py-3 rounded-full font-bold text-xs md:text-sm hover:text-white group uppercase tracking-wider shadow-lg transition-all duration-300 ${pilaresValor[activePilar].colorText.includes('accent') ? 'btn-neon-cian' : pilaresValor[activePilar].colorText.includes('emerald') ? 'btn-neon-blue' : pilaresValor[activePilar].colorText.includes('amber') ? 'btn-neon-amber' : 'btn-neon-purple'}`}
                 >
-                  {sectores[activeSector].etiquetaBoton}
+                  Ver Proyectos en Portafolio
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
-
-                {/* Flecha Derecha */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveSector((prev) => (prev + 1) % sectores.length);
-                  }}
-                  className="p-3 rounded-full border border-white/10 text-white bg-slate-950/60 hover:bg-slate-900 hover:border-white/20 hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95 cursor-pointer flex-shrink-0"
-                  aria-label="Siguiente sector"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
               </div>
             </div>
 
-            {/* Lado Derecho: Visualizador de Imagen Premium del Sector */}
-            <div className="hidden md:flex flex-1 justify-center items-center relative z-10 animate-slide-right" key={`visual-${activeSector}`}>
-              <div className="w-full max-w-[420px] aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative group/visual bg-slate-950/60 transition-all duration-500">
+            {/* Lado Derecho: Imagen Conceptual con enlace a portafolio */}
+            <div className="flex-1 w-full flex justify-center items-center relative z-10 animate-slide-right" key={`visual-pilar-${activePilar}`}>
+              <Link 
+                to="/portafolio" 
+                className="w-full max-w-[420px] aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative group/visual bg-slate-950/60 transition-all duration-500 block cursor-pointer"
+              >
                 {/* Resplandor de fondo neón orbital */}
                 <div className={`absolute -inset-10 bg-gradient-to-tr ${
-                  sectores[activeSector].colorClass.includes('cian') ? 'from-nexus-accent/20 to-cyan-500/5' : 
-                  sectores[activeSector].colorClass.includes('blue') ? 'from-nexus-blue/20 to-indigo-500/5' : 
-                  sectores[activeSector].colorClass.includes('amber') ? 'from-amber-500/20 to-orange-500/5' : 
+                  pilaresValor[activePilar].colorText.includes('accent') ? 'from-nexus-accent/20 to-cyan-500/5' : 
+                  pilaresValor[activePilar].colorText.includes('emerald') ? 'from-emerald-500/20 to-teal-500/5' : 
+                  pilaresValor[activePilar].colorText.includes('amber') ? 'from-amber-500/20 to-orange-500/5' : 
                   'from-nexus-purple/20 to-pink-500/5'
                 } opacity-30 blur-2xl group-hover/visual:opacity-50 transition-opacity duration-700`}></div>
                 
-                {/* Imagen del sector */}
+                {/* Imagen del pilar */}
                 <img 
-                  src={sectores[activeSector].imagen ? (sectores[activeSector].imagen.startsWith('http') || sectores[activeSector].imagen.startsWith('data:') ? sectores[activeSector].imagen : `${import.meta.env.BASE_URL.replace(/\/$/, "")}${sectores[activeSector].imagen}`) : ''} 
-                  alt={sectores[activeSector].titulo}
+                  src={pilaresValor[activePilar].imagen ? (pilaresValor[activePilar].imagen.startsWith('http') || pilaresValor[activePilar].imagen.startsWith('data:') ? pilaresValor[activePilar].imagen : `${import.meta.env.BASE_URL.replace(/\/$/, "")}${pilaresValor[activePilar].imagen}`) : ''} 
+                  alt={pilaresValor[activePilar].titulo}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover/visual:scale-105"
                   loading="lazy"
-                  onError={(e) => {
-                    e.target.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80";
-                  }}
                 />
                 
                 {/* Capa de sombreado y gradiente para fusionar con el fondo */}
                 <div className="absolute inset-0 bg-gradient-to-t from-nexus-dark/60 via-transparent to-transparent pointer-events-none"></div>
-                
-                {/* Marco flotante con el icono en pequeño en la esquina */}
-                <div className={`absolute top-4 right-4 p-2.5 rounded-2xl bg-slate-900/90 border border-white/10 ${sectores[activeSector].colorText} shadow-lg backdrop-blur-md transition-transform duration-300 group-hover/visual:scale-110`}>
-                  {(() => {
-                    const Icon = sectores[activeSector].icon;
-                    return <Icon className="w-5 h-5" />;
-                  })()}
-                </div>
-              </div>
+              </Link>
             </div>
+
           </div>
+
+          {/* Flechas de navegación sutiles */}
+          {/* Flecha Izquierda */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePilar((prev) => (prev - 1 + pilaresValor.length) % pilaresValor.length);
+            }}
+            className="absolute left-[-20px] md:left-[-30px] top-1/2 -translate-y-1/2 p-3 rounded-full border border-white/5 text-gray-400 bg-slate-950/60 backdrop-blur-md hover:bg-slate-900 hover:border-white/20 hover:text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95 cursor-pointer z-20"
+            aria-label="Pilar anterior"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Flecha Derecha */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePilar((prev) => (prev + 1) % pilaresValor.length);
+            }}
+            className="absolute right-[-20px] md:right-[-30px] top-1/2 -translate-y-1/2 p-3 rounded-full border border-white/5 text-gray-400 bg-slate-950/60 backdrop-blur-md hover:bg-slate-900 hover:border-white/20 hover:text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95 cursor-pointer z-20"
+            aria-label="Siguiente pilar"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
 
           {/* Indicadores de progreso (Dotted) */}
           <div className="flex justify-center gap-3 mt-6">
-            {sectores.map((_, idx) => (
+            {pilaresValor.map((_, idx) => (
               <button 
                 key={idx}
-                onClick={() => setActiveSector(idx)}
+                onClick={() => setActivePilar(idx)}
                 className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer hover:bg-white/40 ${
-                  activeSector === idx ? 'w-8 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'w-2.5 bg-white/20'
+                  activePilar === idx ? 'w-8 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'w-2.5 bg-white/20'
                 }`}
-                aria-label={`Ir al sector ${idx + 1}`}
+                aria-label={`Ir al pilar ${idx + 1}`}
               />
             ))}
           </div>
+
         </div>
 
         {/* Resto del Bento Grid Layout (Estadísticas y Proceso) */}
