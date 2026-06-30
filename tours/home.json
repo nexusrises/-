@@ -1,0 +1,22 @@
+{
+  "sala": {
+    "nombre": "Sala de Exhibición Premium",
+    "imagen": "/tour/sala.jpg",
+    "descripcion": "Nuestra sala principal interactiva con acabados de lujo y diseño contemporáneo.",
+    "hotspots": [],
+    "heading": {
+      "x": 7,
+      "y": 80
+    }
+  },
+  "cocina": {
+    "nombre": "Cocina / Laboratorio Tecnológico",
+    "imagen": "/tour/cocina.jpg",
+    "descripcion": "Un espacio culinario y tecnológico integrado con los más altos estándares modernos.",
+    "hotspots": [],
+    "heading": {
+      "x": 1,
+      "y": 143
+    }
+  }
+}
