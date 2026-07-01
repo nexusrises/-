@@ -696,5 +696,26 @@ p.text-lg, .text-lg p {
   }
 }
 
+/* Animación de pulso y resplandor continuo para el botón flotante de cerrar en móviles */
+@keyframes pulse-glow-shadow {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 0px rgba(0, 242, 254, 0.1);
+    border-color: rgba(0, 242, 254, 0.2);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 10px 3px rgba(0, 242, 254, 0.35);
+    border-color: rgba(0, 242, 254, 0.5);
+  }
+}
+
+.btn-close-pulse {
+  animation: pulse-glow-shadow 2.8s infinite ease-in-out;
+}
+
+/* Forzar prioridad absoluta en el DOM de Three.js para el hotspot seleccionado */
+.active-hotspot-priority {
+  z-index: 999999 !important;
+}
+
 
 

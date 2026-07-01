@@ -76,15 +76,16 @@ export default function Navbar() {
         {/* Hamburger Menu (Mobile) */}
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-gray-400 hover:text-white focus:outline-none w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5"
+          className={`md:hidden p-2 text-gray-400 hover:text-white focus:outline-none w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-all duration-200 ${
+            isOpen ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100 scale-100'
+          }`}
           aria-label="Toggle Menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Drawer */}
-      <div className={`md:hidden absolute top-full left-0 w-full bg-[#070a13]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.8)] p-6 flex flex-col gap-5 transition-all duration-300 origin-top z-40 ${
+      <div className={`md:hidden absolute top-full left-0 w-full bg-[#070a13]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.8)] p-6 pb-7 flex flex-col gap-5 transition-all duration-300 origin-top z-40 ${
         isOpen ? 'opacity-100 scale-y-100 visible' : 'opacity-0 scale-y-0 invisible pointer-events-none'
       }`}>
         <div className="flex flex-col gap-4 text-base font-semibold">
@@ -118,6 +119,15 @@ export default function Navbar() {
         >
           Contactar
         </Link>
+
+        {/* Botón adhesivo/sticker de cerrar en la línea inferior del menú */}
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute -bottom-4.5 left-1/2 -translate-x-1/2 bg-[#070a13] border border-white/10 text-gray-400 hover:text-nexus-accent px-4.5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex items-center gap-1.5 active:scale-95 transition-all duration-200 cursor-pointer whitespace-nowrap z-50 hover:border-nexus-accent/30"
+        >
+          <X className="w-3 h-3" />
+          Cerrar menú
+        </button>
       </div>
     </nav>
   );

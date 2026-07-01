@@ -367,7 +367,7 @@ export default function Home() {
             {propiedadesFiltradas.map((propiedad) => (
               <div
                 key={propiedad.id}
-                className="group/card bg-[#0c111d]/60 border border-white/5 rounded-3xl overflow-hidden shadow-xl hover:border-[#00f2fe]/20 hover:shadow-[0_10px_30px_rgba(0,242,254,0.05)] transition-all duration-300 flex flex-col justify-between h-full"
+                className="group/card bg-[#0c111d]/70 backdrop-blur-md border border-white/5 rounded-3xl overflow-hidden shadow-xl hover:border-[#00f2fe]/20 hover:shadow-[0_10px_30px_rgba(0,242,254,0.05)] transition-all duration-300 flex flex-col justify-between h-full"
               >
                 {/* Cabecera de la Tarjeta: Imagen de Portada y Etiquetas */}
                 <div 
@@ -473,27 +473,38 @@ export default function Home() {
 
       {/* 3. VENTANA MODAL DE DETALLES Y VISOR 360° AVANZADO */}
       {selectedProperty && (
-        <div 
-          className={`fixed inset-0 z-50 flex items-center justify-center p-2 md:p-6 bg-black/90 backdrop-blur-md overflow-y-auto transition-all duration-300 ease-out ${
-            isModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-        >
+        <>
+          {/* Botón de Cierre Flotante (Solo Móviles) - Fixed con Transparencia 70 y Desenfocado */}
+          <button
+            onClick={closePropertyModal}
+            className={`fixed md:hidden left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-[#0c111d]/50 backdrop-blur-md border border-[#00f2fe]/15 text-[#00f2fe] hover:text-white transition-all duration-300 cursor-pointer z-55 shadow-lg opacity-70 hover:opacity-100 active:scale-90 btn-close-pulse ${
+              isModalOpen ? 'opacity-70 scale-100' : 'opacity-0 scale-90 pointer-events-none'
+            }`}
+            aria-label="Cerrar modal"
+          >
+            <X className="w-4 h-4" />
+          </button>
 
-          {/* Contenedor del Modal */}
           <div 
-            className={`bg-[#0c111d] border border-white/10 rounded-3xl w-full max-w-6xl h-fit md:h-[85vh] max-h-[95vh] md:max-h-[85vh] overflow-visible md:overflow-hidden relative shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex flex-col my-8 md:my-0 transition-all duration-300 ease-out ${
-              isModalOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+            className={`fixed inset-0 z-50 flex items-start md:items-center justify-center p-2 md:p-6 bg-black/90 backdrop-blur-md overflow-y-auto transition-all duration-300 ease-out ${
+              isModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >
-
-            {/* Botón de Cierre Flotante */}
-            <button
-              onClick={closePropertyModal}
-              className="absolute top-4 right-4 p-2.5 rounded-full bg-black/55 border border-white/15 text-gray-400 hover:text-white hover:bg-white/15 hover:border-white/35 transition-all duration-200 cursor-pointer z-50 shadow-md"
-              aria-label="Cerrar modal"
+            {/* Contenedor del Modal */}
+            <div 
+              className={`bg-[#0c111d] border border-white/10 rounded-3xl w-full max-w-6xl h-fit md:h-[85vh] max-h-none md:max-h-[85vh] overflow-visible md:overflow-hidden relative shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex flex-col my-8 md:my-0 transition-all duration-300 ease-out ${
+                isModalOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+              }`}
             >
-              <X className="w-5 h-5" />
-            </button>
+              
+              {/* Botón de Cierre Superior Derecha (Solo para Computadoras / PC) */}
+              <button
+                onClick={closePropertyModal}
+                className="hidden md:flex absolute top-4 right-4 p-2.5 rounded-full bg-black/55 border border-white/15 text-gray-400 hover:text-white hover:bg-white/15 hover:border-white/35 transition-all duration-200 cursor-pointer z-50 shadow-md"
+                aria-label="Cerrar modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
             {/* ENCABEZADO SUPERIOR */}
             <div className="p-3.5 md:p-8 pb-1 md:pb-4 border-b border-white/5 space-y-2 md:space-y-3 z-30 flex flex-col items-center text-center">
@@ -525,7 +536,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 p-3 md:p-8 pt-2.5 md:pt-6 overflow-visible md:overflow-hidden h-fit md:h-[calc(100%-120px)] flex-grow">
 
               {/* Columna Izquierda: Visor VirtualTour 360° */}
-              <div className="relative md:col-span-7 h-[210px] sm:h-[280px] md:h-full min-h-[200px] md:min-h-[400px] bg-black rounded-2xl overflow-hidden border border-white/5 shadow-inner z-10">
+              <div className="relative md:col-span-7 h-[270px] sm:h-[320px] md:h-full min-h-[200px] md:min-h-[400px] bg-black rounded-2xl overflow-hidden border border-white/5 shadow-inner z-10">
                 {isTourLoaded ? (
                   <VirtualTour
                     tourId={selectedProperty.tourId}
@@ -635,7 +646,7 @@ export default function Home() {
                 </div>
 
                 {/* Botón de WhatsApp Corporativo */}
-                <div className="pt-6 border-t border-white/5 mt-6">
+                <div className="pt-6 border-t border-white/5 mt-6 flex flex-col gap-3.5">
                   <a
                     href={`https://wa.me/51951300535?text=Hola%20Nexus%2C%20estoy%20interesado%20en%20el%20proyecto%20*${encodeURIComponent(selectedProperty.titulo)}*%2C%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20esta%20propiedad.`}
                     target="_blank"
@@ -658,6 +669,14 @@ export default function Home() {
                       </span>
                     </div>
                   </a>
+
+                  {/* Botón Cerrar Proyecto (Volver al listado) en móviles */}
+                  <button
+                    onClick={closePropertyModal}
+                    className="w-full md:hidden inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-white/10 hover:border-white/20 bg-white/[0.02] hover:bg-white/[0.05] text-gray-400 hover:text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.98] select-none cursor-pointer mt-1"
+                  >
+                    Volver al listado
+                  </button>
                 </div>
 
                 {/* Mapa de ubicación del lote en tiempo real */}
@@ -690,6 +709,7 @@ export default function Home() {
 
           </div>
         </div>
+      </>
       )}
     </div>
   );

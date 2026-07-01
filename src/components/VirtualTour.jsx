@@ -26,7 +26,9 @@ import {
   Minus,
   Sun,
   Maximize2,
-  Minimize2
+  Minimize2,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { tourData } from '../data/tourData';
 
@@ -248,9 +250,13 @@ function Hotspot({
   const _cameraDir = useRef(new THREE.Vector3());
   const _toPoint = useRef(new THREE.Vector3());
 
+  // Tracking de rotación de la cámara para ocultar tooltip al girar
+  const prevCameraRotation = useRef(new THREE.Euler());
+  const hasInitializedRotation = useRef(false);
+
   // Verificar cada frame si el hotspot está frente a la cámara.
   // Si está detrás, ocultarlo via CSS para evitar proyecciones invertidas.
-  useFrame(() => {
+  useFrame((state) => {
     if (!visibilityRef.current) return;
     const [x, y, z] = posicion || [0, 0, -20];
     // Vector forward de la cámara (hacia dónde apunta)
@@ -266,6 +272,26 @@ function Hotspot({
     const isInFront = dot > 0.0;
     visibilityRef.current.style.visibility = isInFront ? 'visible' : 'hidden';
     visibilityRef.current.style.pointerEvents = isInFront ? 'auto' : 'none';
+
+    // Cerrar tooltip automáticamente si el usuario gira o mueve la cámara 360°
+    if (showTooltip) {
+      if (!hasInitializedRotation.current) {
+        prevCameraRotation.current.copy(state.camera.rotation);
+        hasInitializedRotation.current = true;
+      } else {
+        const rotDiffX = Math.abs(state.camera.rotation.x - prevCameraRotation.current.x);
+        const rotDiffY = Math.abs(state.camera.rotation.y - prevCameraRotation.current.y);
+        const rotDiffZ = Math.abs(state.camera.rotation.z - prevCameraRotation.current.z);
+        
+        // Umbral de rotación (aprox. 0.17 grados)
+        if (rotDiffX > 0.003 || rotDiffY > 0.003 || rotDiffZ > 0.003) {
+          setShowTooltip(false);
+          hasInitializedRotation.current = false;
+        }
+      }
+    } else {
+      hasInitializedRotation.current = false;
+    }
   });
 
   const SelectedIcon = IconMap[icono] || ArrowRight;
@@ -276,11 +302,12 @@ function Hotspot({
     : 'none';
 
   const isTransform = (posicionTipo === 'piso' || posicionTipo === 'muro');
-  const distFactor = (!isTransform && escalaZoom !== false) ? 15 : undefined;
+  const currentTransform = isTransform && !showTooltip;
+  const distFactor = (!currentTransform && escalaZoom !== false) ? 15 : undefined;
 
   const wrapperStyle = {
     opacity: opacidad ?? 1.0,
-    transform: isTransform ? undefined : `scale(${escala ?? 1.0}) rotateZ(${inclinacion ?? 0}deg) rotateX(${rotacion ?? 0}deg)`,
+    transform: currentTransform ? undefined : `scale(${escala ?? 1.0}) rotateZ(${inclinacion ?? 0}deg) rotateX(${rotacion ?? 0}deg)`,
     filter: shadowFilter
   };
 
@@ -297,7 +324,11 @@ function Hotspot({
         position={[0, 0, 0]}
         center
         distanceFactor={distFactor}
-        transform={isTransform}
+        transform={currentTransform}
+        className={showTooltip ? 'active-hotspot-priority' : ''}
+        style={{
+          zIndex: showTooltip ? 99999 : 10
+        }}
       >
         {/* Contenedor con ref para control de visibilidad sin re-renders */}
         <div ref={visibilityRef}>
@@ -424,14 +455,24 @@ function Hotspot({
 
           {itemTipo === 'lote' && (
             <div 
-              style={wrapperStyle}
-              className="group relative flex items-center justify-center transition-all duration-300"
+              style={{ ...wrapperStyle, zIndex: showTooltip ? 9999 : 10 }}
+              className={`group relative flex items-center justify-center transition-all duration-300 ${
+                showTooltip ? 'z-50' : 'z-10'
+              }`}
               onPointerDown={(e) => {
                 e.stopPropagation();
                 setShowTooltip(!showTooltip);
               }}
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
+              onMouseEnter={() => {
+                if (window.matchMedia('(hover: hover)').matches) {
+                  setShowTooltip(true);
+                }
+              }}
+              onMouseLeave={() => {
+                if (window.matchMedia('(hover: hover)').matches) {
+                  setShowTooltip(false);
+                }
+              }}
             >
               {/* Anillo exterior premium con degradado */}
               <div
@@ -440,7 +481,7 @@ function Hotspot({
 
               {/* Botón interactivo central con el color de su estado */}
               <div
-                className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-white font-black text-xs shadow-lg font-sans"
+                className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white text-white font-black text-xs shadow-lg font-sans"
                 style={{
                   background: color || '#22c55e',
                   boxShadow: `0 0 15px ${color || '#22c55e'}`
@@ -844,13 +885,13 @@ export default function VirtualTour({
           ? "fixed inset-0 w-screen h-screen z-[99999] bg-[#020617] flex flex-col overflow-hidden"
           : isExpanded
           ? "fixed inset-4 md:inset-10 z-[99999] bg-[#020617]/95 backdrop-blur-xl border border-white/15 shadow-[0_0_50px_rgba(0,0,0,0.85)] transition-all duration-300 rounded-3xl overflow-hidden flex flex-col"
-          : "w-full h-full relative group/tour transition-all duration-500 overflow-hidden rounded-3xl"
+          : "w-full h-full relative group/tour transition-all duration-500 overflow-hidden rounded-3xl flex flex-col"
       }
     >
       <Canvas
         camera={{ position: [0, 0, 0.1] }}
         dpr={[1, 2]}
-        className="w-full h-full cursor-grab active:cursor-grabbing"
+        className="w-full h-[calc(100%-50px)] md:h-full cursor-grab active:cursor-grabbing"
         style={{ filter: getFilterCss(filtro) }}
         onPointerDown={() => {
           setAutoRotateState(false);
@@ -922,16 +963,18 @@ export default function VirtualTour({
       />
 
       {/* Panel Superior de Control de Escena */}
-      <div className="absolute top-6 left-6 right-6 flex items-start justify-between pointer-events-none z-20">
+      <div className="absolute top-3 left-3 right-3 md:top-6 md:left-6 md:right-6 flex items-start justify-between pointer-events-none z-20">
         {/* Panel Unificado: Nombre del Entorno y Descripción */}
-        <div className="glass-panel border-white/10 backdrop-blur-md p-4 rounded-2xl pointer-events-auto max-w-xs md:max-w-sm animate-fade-in shadow-lg">
-          <div className="flex items-center gap-2 mb-1.5">
-            <Compass className="w-4 h-4 text-cyan-400 animate-pulse" />
-            <h3 className="text-white font-bold text-xs md:text-sm tracking-tight">{activeScene.nombre}</h3>
+        <div className="glass-panel border-white/10 backdrop-blur-md p-2 px-3 md:p-4 rounded-xl md:rounded-2xl pointer-events-auto max-w-[150px] md:max-w-sm animate-fade-in shadow-lg">
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <Compass className="w-3.5 h-3.5 text-cyan-400 animate-pulse flex-shrink-0" />
+            <h3 className="text-white font-bold text-[10px] md:text-sm tracking-tight truncate">{activeScene.nombre}</h3>
           </div>
-          <p className="text-gray-400 text-[10px] md:text-xs leading-relaxed">
-            {activeScene.descripcion}
-          </p>
+          {activeScene.descripcion && (
+            <p className="hidden md:block text-gray-400 text-xs leading-relaxed mt-1">
+              {activeScene.descripcion}
+            </p>
+          )}
         </div>
 
         {/* Botones de Control del Sistema */}
@@ -954,13 +997,13 @@ export default function VirtualTour({
           {/* Botón de Brújula (Norte Magnético) */}
           <button
             onClick={orientToNorth}
-            className="group p-2.5 rounded-xl glass-panel border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer shadow-lg flex items-center justify-center relative bg-slate-950/40"
+            className="group p-2 md:p-2.5 rounded-xl glass-panel border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer shadow-lg flex items-center justify-center relative bg-slate-950/40"
             title="Norte Magnético. Clic para orientar al Norte"
           >
             {/* Círculo de la brújula */}
-            <div className="w-6 h-6 rounded-full border border-white/25 flex items-center justify-center relative bg-slate-950/40">
+            <div className="w-5 h-5 md:w-6 md:h-6 rounded-full border border-white/25 flex items-center justify-center relative bg-slate-950/40">
               {/* Marca del Norte "N" */}
-              <span className="absolute top-[-2.5px] text-[7.5px] font-bold text-red-500 font-mono tracking-tighter">N</span>
+              <span className="absolute top-[-3.5px] md:top-[-2.5px] text-[6.5px] md:text-[7.5px] font-bold text-red-500 font-mono tracking-tighter">N</span>
               {/* Aguja Magnética que rota */}
               <div 
                 ref={compassRef} 
@@ -968,7 +1011,7 @@ export default function VirtualTour({
                 style={{ transform: `rotate(${(activeScene.northOffset || 0)}deg)` }}
               >
                 {/* Aguja de la brújula (SVG Premium) */}
-                <svg width="8" height="18" viewBox="0 0 8 18" fill="none" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                <svg width="6" height="14" md:width="8" md:height="18" viewBox="0 0 8 18" fill="none" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
                   {/* Punta roja (Norte) */}
                   <path d="M4 1L7 9H1L4 1Z" fill="#ef4444" />
                   {/* Punta plateada (Sur) */}
@@ -980,13 +1023,13 @@ export default function VirtualTour({
 
           <button
             onClick={() => setShowHelp(!showHelp)}
-            className={`p-3 rounded-xl border transition-all duration-200 cursor-pointer ${showHelp
+            className={`p-2.5 md:p-3 rounded-xl border transition-all duration-200 cursor-pointer ${showHelp
                 ? 'bg-cyan-500/25 border-cyan-400/40 text-cyan-300'
                 : 'glass-panel border-white/10 text-gray-400 hover:text-white hover:bg-white/5'
               }`}
             title="Mostrar Guía de Navegación"
           >
-            <HelpCircle className="w-4.5 h-4.5" />
+            <HelpCircle className="w-4 h-4 md:w-4.5 md:h-4.5" />
           </button>
         </div>
       </div>
@@ -1016,37 +1059,66 @@ export default function VirtualTour({
 
       {/* Selector de Miniaturas Flotante (Muy limpio en el pie central del visor) */}
       {showThumbnails && (
-        <div className="absolute bottom-6 left-6 right-20 md:left-1/2 md:right-auto md:-translate-x-1/2 z-20 flex gap-2.5 bg-slate-950/70 border border-white/10 p-2 rounded-2xl backdrop-blur-md shadow-2xl pointer-events-auto md:max-w-[90%] overflow-x-auto scrollbar-none">
-          {Object.keys(scenes).map((sceneKey) => (
-            <button
-              key={`thumb-${sceneKey}`}
-              onClick={() => handleNavigate(sceneKey)}
-              className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl transition-all duration-300 border cursor-pointer whitespace-nowrap ${activeSceneKey === sceneKey
-                  ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold scale-102 shadow-[0_0_12px_rgba(6,182,212,0.25)]'
-                  : 'bg-white/5 border-white/5 text-gray-400 hover:text-white hover:bg-white/10'
-                }`}
-            >
-              <div className="w-6 h-6 rounded-md overflow-hidden border border-white/10 flex-shrink-0">
-                <img src={scenes[sceneKey].imagen ? (scenes[sceneKey].imagen.startsWith('http') || scenes[sceneKey].imagen.startsWith('data:') ? scenes[sceneKey].imagen : `${import.meta.env.BASE_URL.replace(/\/$/, "")}${scenes[sceneKey].imagen}`) : ''} alt={scenes[sceneKey].nombre} className="w-full h-full object-cover pointer-events-none" />
-              </div>
+        <div className="w-full h-[50px] md:absolute md:bottom-6 md:left-1/2 md:right-auto md:-translate-x-1/2 z-20 bg-[#070a13]/70 md:bg-slate-950/70 border-t md:border border-white/5 md:border-white/10 md:rounded-2xl backdrop-blur-md shadow-2xl pointer-events-auto md:max-w-[90%] flex items-center relative flex-shrink-0 overflow-hidden">
+          
+          {/* Indicador Izquierdo (Chevron con fade) - Solo Móviles */}
+          <button
+            onClick={() => {
+              const el = document.getElementById('scenes-scroll-container');
+              if (el) el.scrollBy({ left: -140, behavior: 'smooth' });
+            }}
+            className="md:hidden flex items-center justify-center w-8 h-full text-gray-500 hover:text-white bg-gradient-to-r from-[#070a13] to-transparent z-30 cursor-pointer active:scale-75 transition-all flex-shrink-0"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
 
-              <span className="text-[10px] uppercase tracking-wider font-semibold">{scenes[sceneKey].nombre}</span>
-            </button>
-          ))}
+          {/* Carrusel Deslizable */}
+          <div 
+            id="scenes-scroll-container"
+            className="flex-grow h-full flex gap-2.5 overflow-x-auto scrollbar-none items-center px-2 md:px-2 py-2"
+          >
+            {Object.keys(scenes).map((sceneKey) => (
+              <button
+                key={`thumb-${sceneKey}`}
+                onClick={() => handleNavigate(sceneKey)}
+                className={`flex items-center gap-1.5 md:gap-2 px-2.5 py-1.5 rounded-lg md:rounded-xl transition-all duration-300 border cursor-pointer whitespace-nowrap ${activeSceneKey === sceneKey
+                    ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold scale-102 shadow-[0_0_12px_rgba(6,182,212,0.25)]'
+                    : 'bg-white/5 border-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                  }`}
+              >
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-md overflow-hidden border border-white/10 flex-shrink-0">
+                  <img src={scenes[sceneKey].imagen ? (scenes[sceneKey].imagen.startsWith('http') || scenes[sceneKey].imagen.startsWith('data:') ? scenes[sceneKey].imagen : `${import.meta.env.BASE_URL.replace(/\/$/, "")}${scenes[sceneKey].imagen}`) : ''} alt={scenes[sceneKey].nombre} className="w-full h-full object-cover pointer-events-none" />
+                </div>
+
+                <span className="text-[9px] md:text-[10px] uppercase tracking-wider font-semibold">{scenes[sceneKey].nombre}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Indicador Derecho (Chevron con fade) - Solo Móviles */}
+          <button
+            onClick={() => {
+              const el = document.getElementById('scenes-scroll-container');
+              if (el) el.scrollBy({ left: 140, behavior: 'smooth' });
+            }}
+            className="md:hidden flex items-center justify-center w-8 h-full text-gray-500 hover:text-white bg-gradient-to-l from-[#070a13] to-transparent z-30 cursor-pointer active:scale-75 transition-all flex-shrink-0"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       )}
 
       {/* Botón de Fullscreen nativo / simulado por CSS (Esquina inferior derecha) */}
-      <div className="absolute right-6 bottom-6 z-20 flex flex-col gap-2 pointer-events-auto">
+      <div className="absolute right-3 bottom-[60px] md:right-6 md:bottom-6 z-20 flex flex-col gap-2 pointer-events-auto">
         <button
           onClick={toggleFullscreen}
-          className="p-3 rounded-xl glass-panel border border-white/15 backdrop-blur-md text-cyan-400 hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl cursor-pointer flex items-center justify-center bg-[#0f172a]/80"
+          className="p-2 md:p-3 rounded-xl glass-panel border border-white/15 backdrop-blur-md text-cyan-400 hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl cursor-pointer flex items-center justify-center bg-[#0f172a]/80"
           title={isFullscreen ? "Salir de pantalla completa" : "Pantalla Completa (Fullscreen)"}
         >
           {isFullscreen ? (
-            <Minimize2 className="w-4.5 h-4.5" />
+            <Minimize2 className="w-4 h-4 md:w-4.5 md:h-4.5" />
           ) : (
-            <Maximize2 className="w-4.5 h-4.5" />
+            <Maximize2 className="w-4 h-4 md:w-4.5 md:h-4.5" />
           )}
         </button>
       </div>
