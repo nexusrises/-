@@ -6,16 +6,16 @@
       {
         "tipo": "hotspot",
         "posicion": [
-          -16.99,
-          -8,
-          6.89
+          -17,
+          -8.14,
+          6.7
         ],
         "destino": "02_residencial_maravillas_1585",
         "texto": "Maravillas  1",
         "opacidad": 1,
         "escala": 1,
         "icono": "ArrowDown",
-        "color": "#00ff2a",
+        "color": "#03a516",
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
@@ -31,16 +31,16 @@
       {
         "tipo": "hotspot",
         "posicion": [
-          -6.65,
-          -3.89,
-          18.46
+          -5.41,
+          -3.32,
+          18.97
         ],
         "destino": "04_mara_ii_mz_c_8506",
         "texto": "Maravillas  2",
         "opacidad": 1,
         "escala": 1,
         "icono": "ArrowDown",
-        "color": "#0af545",
+        "color": "#00c220",
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
@@ -50,16 +50,16 @@
         "cursiva": false,
         "mostrarTextoSiempre": true,
         "fuente": "Montserrat",
-        "fontSize": 15
+        "fontSize": 13
       }
     ],
     "heading": {
-      "x": -29,
-      "y": 124
+      "x": -11,
+      "y": 138
     },
     "norteMagnetico": 145,
     "filtro": "normal",
-    "northOffset": 178
+    "northOffset": 193
   },
   "02_residencial_maravillas_1585": {
     "nombre": "Maravillas 1",
@@ -113,19 +113,70 @@
         "cursiva": false
       },
       {
+        "tipo": "lote",
+        "posicion": [
+          -16.67,
+          -8.26,
+          7.33
+        ],
+        "manzana": " A",
+        "lote": "2",
+        "estado": "Vendido",
+        "precio": "2700",
+        "area": "120",
+        "color": "#ef4444",
+        "opacidad": 1,
+        "escala": 1,
+        "inclinacion": 0,
+        "posicionTipo": "2d",
+        "escalaZoom": false,
+        "sombra": true,
+        "fijo": false,
+        "negrita": true,
+        "cursiva": false,
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat",
+        "rotacion": 0
+      },
+      {
+        "tipo": "lote",
+        "posicion": [
+          -17.74,
+          -6.84,
+          6.22
+        ],
+        "manzana": "B",
+        "lote": "1",
+        "estado": "Vendido",
+        "precio": "",
+        "area": "",
+        "color": "#ef4444",
+        "opacidad": 1,
+        "escala": 1,
+        "inclinacion": 0,
+        "posicionTipo": "2d",
+        "escalaZoom": false,
+        "sombra": true,
+        "fijo": false,
+        "negrita": true,
+        "cursiva": false,
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat"
+      },
+      {
         "tipo": "manzana",
         "posicion": [
-          -17.29,
-          -9.72,
-          2.59
+          -17.34,
+          -9.6,
+          2.68
         ],
-        "texto": "MZ B",
+        "texto": "mz b",
         "colorTexto": "#ffffff",
-        "colorFondo": "#f73b3b",
+        "colorFondo": "#f50000",
         "opacidad": 1,
-        "escala": 1.4,
+        "escala": 1,
         "inclinacion": 0,
-        "posicionTipo": "piso",
+        "posicionTipo": "2d",
         "escalaZoom": false,
         "sombra": false,
         "fijo": false,
@@ -138,89 +189,14 @@
       {
         "tipo": "lote",
         "posicion": [
-          -17.67,
-          -6.81,
-          6.43
-        ],
-        "manzana": "B",
-        "lote": "1",
-        "estado": "Vendido",
-        "precio": "45000",
-        "area": "160",
-        "color": "#ef4444",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -16.64,
-          -8.31,
-          7.35
-        ],
-        "manzana": "B",
-        "lote": "2",
-        "estado": "Vendido",
-        "precio": "42000",
-        "area": "160",
-        "color": "#ef4444",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -14.75,
-          -9.92,
-          9.16
+          -14.7,
+          -9.97,
+          9.19
         ],
         "manzana": "B",
         "lote": "3",
         "estado": "Vendido",
-        "precio": "42000",
-        "area": "165",
-        "color": "#ef4444",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -12.8,
-          -11.43,
-          10.27
-        ],
-        "manzana": "B",
-        "lote": "4",
-        "estado": "Vendido",
-        "precio": "4500",
+        "precio": "40000",
         "area": "160",
         "color": "#ef4444",
         "opacidad": 1,
@@ -238,14 +214,39 @@
       {
         "tipo": "lote",
         "posicion": [
-          -14.79,
-          -11.26,
-          7.38
+          -12.72,
+          -11.51,
+          10.28
+        ],
+        "manzana": "B",
+        "lote": "4",
+        "estado": "Financiado",
+        "precio": "45000",
+        "area": "165",
+        "color": "#f97316",
+        "opacidad": 1,
+        "escala": 1,
+        "inclinacion": 0,
+        "posicionTipo": "2d",
+        "escalaZoom": false,
+        "sombra": true,
+        "fijo": false,
+        "negrita": true,
+        "cursiva": false,
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat"
+      },
+      {
+        "tipo": "lote",
+        "posicion": [
+          -14.74,
+          -11.41,
+          7.25
         ],
         "manzana": "B",
         "lote": "5",
         "estado": "Disponible",
-        "precio": "42000",
+        "precio": "39000",
         "area": "170",
         "color": "#22c55e",
         "opacidad": 1,
@@ -263,241 +264,16 @@
       {
         "tipo": "lote",
         "posicion": [
-          -15.38,
-          -11.67,
-          5.22
+          -15.46,
+          -11.57,
+          5.21
         ],
         "manzana": "B",
         "lote": "6",
-        "estado": "Disponible",
-        "precio": "40000",
-        "area": "170",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -15.83,
-          -11.82,
-          3.11
-        ],
-        "manzana": "B",
-        "lote": "7",
-        "estado": "Financiado",
-        "precio": "40000",
-        "area": "170",
-        "color": "#f97316",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -16.05,
-          -11.91,
-          0.63
-        ],
-        "manzana": "B",
-        "lote": "8",
-        "estado": "Disponible",
-        "precio": "38000",
-        "area": "170",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -16.04,
-          -11.8,
-          -1.85
-        ],
-        "manzana": "B",
-        "lote": "9",
-        "estado": "Disponible",
-        "precio": "42000",
-        "area": "170",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -15.77,
-          -11.54,
-          -4.25
-        ],
-        "manzana": "B",
-        "lote": "10",
-        "estado": "Financiado",
-        "precio": "450000",
-        "area": "170",
-        "color": "#f97316",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -17.83,
-          -8.64,
-          -2.7
-        ],
-        "manzana": "B",
-        "lote": "11",
         "estado": "Reservado con S/. 100",
-        "precio": "42000",
-        "area": "165",
-        "color": "#f59e0b",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -18.59,
-          -6.91,
-          -2.56
-        ],
-        "manzana": "B",
-        "lote": "12",
-        "estado": "Financiado",
-        "precio": "45000",
-        "area": "160",
-        "color": "#f97316",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -18.3,
-          -8.07,
-          0.22
-        ],
-        "manzana": "B",
-        "lote": "13",
-        "estado": "Disponible",
-        "precio": "40000",
-        "area": "170",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -18.14,
-          -8.11,
-          2.32
-        ],
-        "manzana": "B",
-        "lote": "14",
-        "estado": "Disponible",
-        "precio": "3500",
-        "area": "160",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -17.82,
-          -8.02,
-          4.27
-        ],
-        "manzana": "B",
-        "lote": "15",
-        "estado": "Disponible",
         "precio": "35000",
-        "area": "160",
-        "color": "#22c55e",
+        "area": "170",
+        "color": "#f59e0b",
         "opacidad": 1,
         "escala": 1,
         "inclinacion": 0,
@@ -512,12 +288,12 @@
       }
     ],
     "heading": {
-      "x": -26,
-      "y": 172
+      "x": -11,
+      "y": 85
     },
     "norteMagnetico": 0,
     "filtro": "hdr",
-    "northOffset": 253
+    "northOffset": 262
   },
   "04_mara_ii_mz_c_8506": {
     "nombre": "Maravillas 2",
@@ -597,11 +373,11 @@
       }
     ],
     "heading": {
-      "x": -23,
-      "y": 93
+      "x": -38,
+      "y": 39
     },
     "norteMagnetico": 0,
     "filtro": "bright",
-    "northOffset": 294
+    "northOffset": 322
   }
 }

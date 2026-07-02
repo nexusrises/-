@@ -1,0 +1,12 @@
+{
+  "oficina": {
+    "nombre": "Oficina Corporativa Premium",
+    "imagen": "/tour/oficina_premium.jpg",
+    "descripcion": "Ambiente de trabajo moderno con iluminación LED y ventanales panorámicos en el centro de Juliaca.",
+    "hotspots": [],
+    "heading": {
+      "x": 0,
+      "y": 0
+    }
+  }
+}

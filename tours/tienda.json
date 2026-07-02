@@ -1,0 +1,12 @@
+{
+  "tienda": {
+    "nombre": "Local Comercial / Tienda Boutique",
+    "imagen": "/tour/local_comercial.jpg",
+    "descripcion": "Boutique comercial moderna con estantes iluminados frente al Mercado Túpac Amaru de Juliaca.",
+    "hotspots": [],
+    "heading": {
+      "x": 0,
+      "y": 0
+    }
+  }
+}

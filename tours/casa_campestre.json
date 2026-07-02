@@ -1,0 +1,12 @@
+{
+  "casa_campestre": {
+    "nombre": "Hacienda del Sol Campestre",
+    "imagen": "/tour/casa_campestre.jpg",
+    "descripcion": "Hermosa casa residencial campestre con acabados de sillar y vista al volcán Misti.",
+    "hotspots": [],
+    "heading": {
+      "x": 0,
+      "y": 0
+    }
+  }
+}
