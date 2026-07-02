@@ -50,10 +50,10 @@ export default function Navbar() {
             Proyectos
           </Link>
           <Link 
-            to="/invierte-seguro" 
-            className={`hover:text-nexus-accent transition-colors duration-200 py-2 uppercase ${isActive('/invierte-seguro') ? 'text-nexus-accent' : 'text-white'}`}
+            to="/compra-seguro" 
+            className={`hover:text-nexus-accent transition-colors duration-200 py-2 uppercase ${isActive('/compra-seguro') ? 'text-nexus-accent' : 'text-white'}`}
           >
-            Invierte Seguro
+            Compra con Seguridad
           </Link>
           <Link 
             to="/vende-tu-propiedad" 
@@ -97,11 +97,11 @@ export default function Navbar() {
             Proyectos
           </Link>
           <Link 
-            to="/invierte-seguro" 
+            to="/compra-seguro" 
             onClick={handleLinkClick}
-            className={`p-2 rounded-xl hover:bg-white/5 ${isActive('/invierte-seguro') ? 'text-nexus-accent' : 'text-white'}`}
+            className={`p-2 rounded-xl hover:bg-white/5 ${isActive('/compra-seguro') ? 'text-nexus-accent' : 'text-white'}`}
           >
-            Invierte Seguro
+            Compra con Seguridad
           </Link>
           <Link 
             to="/vende-tu-propiedad" 
