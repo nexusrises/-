@@ -257,7 +257,7 @@ export default function CompraSeguro() {
       </section>
 
       {/* 2. LA REALIDAD DEL MERCADO (PELIGROS) */}
-      <section className="container mx-auto px-6 pb-10 relative z-10">
+      <section className="container mx-auto px-3 sm:px-6 pb-10 relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-16 reveal-on-scroll">
           <span className="text-xs uppercase text-red-400 font-bold tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">ALERTAS DEL MERCADO</span>
           <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight mt-4 font-display">
@@ -294,7 +294,7 @@ export default function CompraSeguro() {
                     </span>
                   </div>
 
-                  <div className="w-full md:w-1/2 p-5 sm:p-8 md:p-12 flex flex-col justify-between bg-[#0a0d14]/95">
+                  <div className="w-full md:w-1/2 p-4 sm:p-8 md:p-12 flex flex-col justify-between bg-[#0a0d14]/95">
                     <div className="space-y-4 md:space-y-6">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 shrink-0">
@@ -572,98 +572,109 @@ export default function CompraSeguro() {
       </section>
 
       {/* 4. ASESORÍA Y SANEAMIENTO CON NUESTRO ABOGADO INMOBILIARIO */}
-      <section className="container mx-auto px-6 pb-20 relative z-10">
-        <div className="max-w-5xl mx-auto glass-panel border-white/5 rounded-3xl p-6 md:p-8 bg-[#0a0d16]/40 backdrop-blur-md flex flex-col md:flex-row gap-8 items-center text-left">
-          
-          {/* Tarjeta Física de Contacto del Abogado */}
-          <div className="w-full md:w-[380px] shrink-0 bg-[#0c0f1d]/90 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
-            <div className="relative group mb-6">
-              {/* Efecto glow emerald alrededor de la imagen */}
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-2xl blur-[15px] opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
-              <img
-                src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/abogado_thumb.png`}
-                alt="Dr. Carlos Ramirez - Abogado Especialista Inmobiliario"
-                className="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover border-2 border-white/10 relative z-10 bg-[#070a13] shadow-[0_8px_20px_rgba(0,0,0,0.4)]"
-                onError={(e) => {
-                  e.target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80";
-                }}
-              />
-            </div>
-            
-            <h4 className="text-white font-bold text-lg md:text-xl font-display">Dr. Carlos Ramirez</h4>
-            <p className="text-emerald-400 text-[10px] md:text-xs font-semibold uppercase tracking-widest mt-1.5 opacity-90">
-              Abogado Especialista Inmobiliario
-            </p>
-            
-            <div className="w-full border-t border-white/5 my-4"></div>
-            
-            <a
-              href="https://wa.me/51951300535?text=Hola%20Dr.%20Carlos%20Ramirez%2C%20deseo%20agendar%20una%20asesor%C3%ADa%20gratuita%20sobre%20el%20estado%20legal%20de%20una%20propiedad%20para%20comprar%2Fvender%20de%20forma%20segura."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center bg-[#25D366] hover:bg-[#20ba5a] text-black py-3 px-4 rounded-xl font-bold uppercase tracking-wider text-[11px] transition-all duration-200 active:scale-95 shadow-[0_0_15px_rgba(37,211,102,0.2)] gap-2 font-display cursor-pointer"
-            >
-              <svg className="w-4.5 h-4.5 fill-current shrink-0" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.156 5.158 0 11.516 0c3.08.001 5.976 1.2 8.154 3.379 2.179 2.18 3.377 5.078 3.377 8.16-.003 6.36-5.159 11.516-11.516 11.516-1.996-.001-3.957-.521-5.69-1.513L0 24zm6.59-4.846c1.6.95 3.197 1.45 4.917 1.451 5.438 0 9.864-4.426 9.867-9.864.001-2.63-1.023-5.105-2.883-6.967C16.689 1.912 14.213.887 11.59.887c-5.44 0-9.866 4.426-9.869 9.866-.001 1.782.47 3.522 1.365 5.066l-.993 3.626 3.71-.973zm12.355-6.726c-.346-.173-2.046-1.01-2.362-1.124-.316-.115-.547-.173-.778.173-.23.346-.893 1.124-1.094 1.355-.2.23-.4.26-.746.086-1.393-.696-2.302-1.218-3.123-2.624-.22-.376.22-.35.63-1.162.068-.136.034-.256-.017-.359-.05-.103-.43-1.036-.59-1.422-.155-.373-.325-.32-.475-.328-.123-.007-.264-.009-.406-.009-.142 0-.373.053-.568.267-.194.214-.742.726-.742 1.77 0 1.044.759 2.052.864 2.193.106.14 1.494 2.28 3.618 3.196.505.218.9.348 1.21.446.508.162.97.139 1.336.085.407-.06 1.246-.51 1.421-.998.175-.488.175-.905.123-.998-.052-.093-.19-.14-.537-.313z"/>
-              </svg>
-              Agendar Asesoría WhatsApp
-            </a>
-          </div>
+      <section className="container mx-auto px-3 sm:px-6 pb-20 relative z-10 border-t border-white/5 pt-12">
+        <div className="max-w-5xl mx-auto glass-panel border-white/10 rounded-3xl p-4 sm:p-8 relative overflow-hidden bg-gradient-to-br from-[#0c101f]/90 to-[#070a13]/95 backdrop-blur-xl shadow-2xl group transition-all duration-300 hover:border-nexus-accent/30">
+          {/* Luces decorativas internas de fondo */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-nexus-accent/10 rounded-full blur-[90px] pointer-events-none transition-all duration-500 group-hover:bg-nexus-accent/15"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-nexus-purple/8 rounded-full blur-[90px] pointer-events-none"></div>
 
-          {/* Información de Respaldo Legal y Beneficios */}
-          <div className="flex-1 space-y-6">
-            <div className="space-y-4">
-              <span className="text-[10px] uppercase font-black tracking-widest text-[#4ade80] bg-[#4ade80]/10 px-3.5 py-1.5 rounded-full border border-[#4ade80]/20 inline-block font-display">
-                SANEAMIENTO Y RESPALDO LEGAL BILATERAL
-              </span>
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
+            
+            {/* Tarjeta Física de Contacto del Abogado */}
+            <div className="w-full lg:w-[320px] shrink-0 bg-[#070a14]/65 border border-white/10 rounded-3xl p-6 flex flex-col items-center text-center shadow-xl backdrop-blur-md hover:border-nexus-accent/20 transition-all duration-300">
+              <div className="relative group mb-5">
+                {/* Efecto glow emerald/cyan alrededor de la imagen */}
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-2xl blur-[12px] opacity-35 group-hover:opacity-55 transition-opacity duration-300"></div>
+                <img
+                  src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/abogado_thumb.png`}
+                  alt="Dr. Carlos Ramirez - Abogado Especialista Inmobiliario"
+                  className="w-36 h-36 md:w-40 md:h-40 rounded-2xl object-cover border-2 border-white/15 relative z-10 bg-[#070a13] shadow-md"
+                  onError={(e) => {
+                    e.target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80";
+                  }}
+                />
+              </div>
               
-              <h3 className="text-2xl md:text-3xl font-bold text-white font-display leading-tight">
-                Protección Jurídica para Comprador y Vendedor
-              </h3>
-              
-              <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed font-sans font-normal">
-                La seguridad jurídica no debe beneficiar solo a una de las partes. El <strong>Dr. Carlos Ramirez</strong> se encarga de analizar los expedientes registrales y sanear la documentación correspondiente de forma neutral. Esto garantiza que el comprador reciba una propiedad limpia de deudas o gravámenes y que el vendedor reciba su pago de manera oportuna, transparente y bajo el amparo de la ley, sin que nadie resulte perjudicado.
+              <h4 className="text-white font-bold text-lg font-display">Dr. Carlos Ramirez</h4>
+              <p className="text-emerald-400 text-[10px] font-semibold uppercase tracking-widest mt-1 opacity-90">
+                Abogado Especialista Inmobiliario
               </p>
-            </div>
-
-            {/* Listado de Beneficios Clave */}
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-gray-300 pt-2 border-t border-white/5 font-sans">
-              <li className="flex items-center gap-2.5">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <span>Estudio exhaustivo de Copia Literal en SUNARP</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <span>Filtro de hipotecas, embargos y gravámenes</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <span>Redacción preventiva de minutas y contratos</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <span>Acompañamiento legal completo en Notaría</span>
-              </li>
-            </ul>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 font-display">
-              <Link
-                to="/"
-                className="inline-flex items-center justify-center border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-xs transition-all duration-200 active:scale-95 w-full sm:w-auto"
+              
+              <div className="w-full border-t border-white/5 my-3.5"></div>
+              
+              <a
+                href="https://wa.me/51951300535?text=Hola%20Dr.%20Carlos%20Ramirez%2C%20deseo%20agendar%20una%20asesor%C3%ADa%20gratuita%20sobre%20el%20estado%20legal%20de%20una%20propiedad%20para%20comprar%2Fvender%20de%20forma%20segura."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center bg-[#25D366] hover:bg-[#20ba5a] text-black py-3 px-4 rounded-xl font-bold uppercase tracking-wider text-[11px] transition-all duration-200 active:scale-95 shadow-[0_0_15px_rgba(37,211,102,0.2)] gap-2 font-display cursor-pointer"
               >
-                Ver Propiedades Aptas
-              </Link>
+                <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.156 5.158 0 11.516 0c3.08.001 5.976 1.2 8.154 3.379 2.179 2.18 3.377 5.078 3.377 8.16-.003 6.36-5.159 11.516-11.516 11.516-1.996-.001-3.957-.521-5.69-1.513L0 24zm6.59-4.846c1.6.95 3.197 1.45 4.917 1.451 5.438 0 9.864-4.426 9.867-9.864.001-2.63-1.023-5.105-2.883-6.967C16.689 1.912 14.213.887 11.59.887c-5.44 0-9.866 4.426-9.869 9.866-.001 1.782.47 3.522 1.365 5.066l-.993 3.626 3.71-.973zm12.355-6.726c-.346-.173-2.046-1.01-2.362-1.124-.316-.115-.547-.173-.778.173-.23.346-.893 1.124-1.094 1.355-.2.23-.4.26-.746.086-1.393-.696-2.302-1.218-3.123-2.624-.22-.376.22-.35.63-1.162.068-.136.034-.256-.017-.359-.05-.103-.43-1.036-.59-1.422-.155-.373-.325-.32-.475-.328-.123-.007-.264-.009-.406-.009-.142 0-.373.053-.568.267-.194.214-.742.726-.742 1.77 0 1.044.759 2.052.864 2.193.106.14 1.494 2.28 3.618 3.196.505.218.9.348 1.21.446.508.162.97.139 1.336.085.407-.06 1.246-.51 1.421-.998.175-.488.175-.905.123-.998-.052-.093-.19-.14-.537-.313z"/>
+                </svg>
+                Agendar Asesoría WhatsApp
+              </a>
             </div>
-          </div>
 
+            {/* Información de Respaldo Legal y Beneficios */}
+            <div className="flex-1 space-y-5 flex flex-col justify-between text-left">
+              <div className="space-y-3.5">
+                <span className="text-[9px] uppercase font-black tracking-widest text-[#4ade80] bg-[#4ade80]/10 px-3 py-1.5 rounded-full border border-[#4ade80]/20 inline-block font-display">
+                  SANEAMIENTO Y RESPALDO LEGAL BILATERAL
+                </span>
+                
+                <h3 className="text-2xl md:text-3xl font-bold text-white font-display leading-tight">
+                  Protección Jurídica para Comprador y Vendedor
+                </h3>
+                
+                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans font-normal">
+                  La seguridad jurídica no debe beneficiar solo a una de las partes. El <strong>Dr. Carlos Ramirez</strong> se encarga de analizar los expedientes registrales y sanear la documentación correspondiente de forma neutral. Esto garantiza que el comprador reciba una propiedad limpia de deudas o gravámenes y que el vendedor reciba su pago de manera oportuna, transparente y bajo el amparo de la ley, sin que nadie resulte perjudicado.
+                </p>
+
+                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans font-normal">
+                  Revisamos tu caso de forma preventiva y te asesoramos sobre el estado legal y los planos del predio antes de firmar cualquier minuta en la notaría.
+                </p>
+              </div>
+
+              {/* Listado de Beneficios Clave */}
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] text-gray-300 pt-3 border-t border-white/5 font-sans">
+                <li className="flex items-center gap-2">
+                  <div className="w-4.5 h-4.5 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 flex items-center justify-center text-emerald-400 shrink-0">
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
+                  <span>Estudio de Copia Literal en SUNARP</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-4.5 h-4.5 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 flex items-center justify-center text-emerald-400 shrink-0">
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
+                  <span>Filtro de hipotecas y embargos</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-4.5 h-4.5 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 flex items-center justify-center text-emerald-400 shrink-0">
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
+                  <span>Redacción de minutas y contratos</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-4.5 h-4.5 rounded-full bg-[#4ade80]/10 border border-[#4ade80]/20 flex items-center justify-center text-emerald-400 shrink-0">
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
+                  <span>Acompañamiento completo en Notaría</span>
+                </li>
+              </ul>
+
+              <div className="pt-3 border-t border-white/5">
+                <Link
+                  to="/"
+                  className="inline-flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 text-white px-6 py-2.5 rounded-xl font-bold transition-all duration-200 active:scale-95 group uppercase tracking-wider text-[10px] font-sans w-full sm:w-auto text-center"
+                >
+                  Ver Propiedades Aptas
+                  <ArrowRight className="w-4.5 h-4.5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 

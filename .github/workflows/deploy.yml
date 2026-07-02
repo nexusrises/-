@@ -1,4 +1,4 @@
-# Workflow para compilar y desplegar el proyecto a GitHub Pages de manera automática
+# Workflow para compilar y desplegar el proyecto a GitHub Pages usando la rama gh-pages
 name: Deploy static content to Pages
 
 on:
@@ -9,11 +9,9 @@ on:
   # Permite ejecutar el workflow manualmente desde la pestaña Actions en GitHub
   workflow_dispatch:
 
-# Configura los permisos del GITHUB_TOKEN para permitir despliegues en GitHub Pages
+# Configura los permisos del GITHUB_TOKEN para permitir empujar cambios a gh-pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # Permite un solo despliegue concurrente a la vez
 concurrency:
@@ -22,9 +20,6 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,14 +37,8 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
