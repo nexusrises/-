@@ -1,0 +1,12 @@
+{
+  "departamento_smart": {
+    "nombre": "Smart Apartment Vista Hermosa",
+    "imagen": "/tour/departamento_smart.jpg",
+    "descripcion": "Departamento inteligente moderno en Juliaca con domótica integrada y vistas urbanas.",
+    "hotspots": [],
+    "heading": {
+      "x": 0,
+      "y": 0
+    }
+  }
+}

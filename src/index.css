@@ -717,5 +717,11 @@ p.text-lg, .text-lg p {
   z-index: 999999 !important;
 }
 
-
-
+/* Ocultar barra de scroll en elementos deslizables */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

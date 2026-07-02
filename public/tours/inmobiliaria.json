@@ -1,21 +1,21 @@
 {
-  "01_rm_vista_lugares_referencia_2696": {
-    "nombre": "Vista aerea",
+  "01_rm_vista_lugares_referencia_7182": {
+    "nombre": "Vista Aerea",
     "imagen": "/tour/01_rm_vista_lugares_referencia.jpg",
     "hotspots": [
       {
         "tipo": "hotspot",
         "posicion": [
-          -16.99,
-          -8,
-          6.89
+          -18.29,
+          -7.28,
+          3.54
         ],
-        "destino": "02_residencial_maravillas_1585",
-        "texto": "Maravillas  1",
+        "destino": "_self",
+        "texto": "Maravillas 11",
         "opacidad": 1,
         "escala": 1,
         "icono": "ArrowDown",
-        "color": "#00ff2a",
+        "color": "#0ef50a",
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
@@ -24,23 +24,21 @@
         "negrita": false,
         "cursiva": false,
         "mostrarTextoSiempre": false,
-        "fuente": "Montserrat",
-        "fontSize": 18,
-        "fondoTransparente": false
+        "fuente": "Montserrat"
       },
       {
         "tipo": "hotspot",
         "posicion": [
-          -6.65,
-          -3.89,
-          18.46
+          -5.4,
+          -3.59,
+          18.92
         ],
-        "destino": "04_mara_ii_mz_c_8506",
+        "destino": "_self",
         "texto": "Maravillas  2",
         "opacidad": 1,
         "escala": 1,
         "icono": "ArrowDown",
-        "color": "#0af545",
+        "color": "#15ef41",
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
@@ -49,98 +47,27 @@
         "negrita": false,
         "cursiva": false,
         "mostrarTextoSiempre": true,
-        "fuente": "Montserrat",
-        "fontSize": 15
+        "fuente": "Montserrat"
       }
     ],
     "heading": {
-      "x": -29,
-      "y": 124
+      "x": -22,
+      "y": 41
     },
-    "norteMagnetico": 145,
+    "norteMagnetico": 0,
     "filtro": "normal",
-    "northOffset": 178
+    "northOffset": 183
   },
-  "02_residencial_maravillas_1585": {
-    "nombre": "Maravillas 1",
+  "02_residencial_maravillas_7183": {
+    "nombre": "Maravillas  1",
     "imagen": "/tour/02_residencial_maravillas.jpg",
     "hotspots": [
       {
-        "tipo": "hotspot",
-        "posicion": [
-          18.38,
-          0.19,
-          7.88
-        ],
-        "destino": "04_mara_ii_mz_c_8506",
-        "texto": "Maravillas 2",
-        "opacidad": 1,
-        "escala": 0.7,
-        "icono": "ArrowDown",
-        "color": "#f50a0a",
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": true,
-        "fondoTransparente": false,
-        "colorFondo": "#ffffff",
-        "colorTexto": "#000980",
-        "fontSize": 23
-      },
-      {
-        "tipo": "hotspot",
-        "posicion": [
-          11.04,
-          -0.62,
-          -16.66
-        ],
-        "destino": "_self",
-        "texto": "Colegio \n\"Jose Olaya\"",
-        "opacidad": 1,
-        "escala": 0.9,
-        "icono": "ArrowDown",
-        "color": "#ff0000",
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "fontSize": 22,
-        "colorFondo": "#ffffff",
-        "colorTexto": "#0006bd",
-        "negrita": true,
-        "cursiva": false
-      },
-      {
-        "tipo": "manzana",
-        "posicion": [
-          -17.29,
-          -9.72,
-          2.59
-        ],
-        "texto": "MZ B",
-        "colorTexto": "#ffffff",
-        "colorFondo": "#f73b3b",
-        "opacidad": 1,
-        "escala": 1.4,
-        "inclinacion": 0,
-        "posicionTipo": "piso",
-        "escalaZoom": false,
-        "sombra": false,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat",
-        "rotacion": 0
-      },
-      {
         "tipo": "lote",
         "posicion": [
-          -17.67,
-          -6.81,
-          6.43
+          -17.68,
+          -6.96,
+          6.24
         ],
         "manzana": "B",
         "lote": "1",
@@ -163,14 +90,14 @@
       {
         "tipo": "lote",
         "posicion": [
-          -16.64,
+          -16.65,
           -8.31,
-          7.35
+          7.33
         ],
         "manzana": "B",
         "lote": "2",
         "estado": "Vendido",
-        "precio": "42000",
+        "precio": "43000",
         "area": "160",
         "color": "#ef4444",
         "opacidad": 1,
@@ -188,39 +115,14 @@
       {
         "tipo": "lote",
         "posicion": [
-          -14.75,
-          -9.92,
-          9.16
+          -14.8,
+          -9.87,
+          9.13
         ],
         "manzana": "B",
         "lote": "3",
         "estado": "Vendido",
-        "precio": "42000",
-        "area": "165",
-        "color": "#ef4444",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -12.8,
-          -11.43,
-          10.27
-        ],
-        "manzana": "B",
-        "lote": "4",
-        "estado": "Vendido",
-        "precio": "4500",
+        "precio": "43000",
         "area": "160",
         "color": "#ef4444",
         "opacidad": 1,
@@ -238,16 +140,16 @@
       {
         "tipo": "lote",
         "posicion": [
-          -14.79,
-          -11.26,
-          7.38
+          -12.74,
+          -11.46,
+          10.31
         ],
         "manzana": "B",
-        "lote": "5",
-        "estado": "Disponible",
-        "precio": "42000",
-        "area": "170",
-        "color": "#22c55e",
+        "lote": "4",
+        "estado": "Vendido",
+        "precio": "45000",
+        "area": "160",
+        "color": "#ef4444",
         "opacidad": 1,
         "escala": 1,
         "inclinacion": 0,
@@ -261,24 +163,21 @@
         "fuente": "Montserrat"
       },
       {
-        "tipo": "lote",
+        "tipo": "manzana",
         "posicion": [
-          -15.38,
-          -11.67,
-          5.22
+          -17.28,
+          -9.72,
+          2.63
         ],
-        "manzana": "B",
-        "lote": "6",
-        "estado": "Disponible",
-        "precio": "40000",
-        "area": "170",
-        "color": "#22c55e",
+        "texto": "MZ b",
+        "colorTexto": "#ffffff",
+        "colorFondo": "#ff0000",
         "opacidad": 1,
         "escala": 1,
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
-        "sombra": true,
+        "sombra": false,
         "fijo": false,
         "negrita": true,
         "cursiva": false,
@@ -288,115 +187,15 @@
       {
         "tipo": "lote",
         "posicion": [
-          -15.83,
-          -11.82,
-          3.11
-        ],
-        "manzana": "B",
-        "lote": "7",
-        "estado": "Financiado",
-        "precio": "40000",
-        "area": "170",
-        "color": "#f97316",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -16.05,
-          -11.91,
-          0.63
+          -16.07,
+          -11.89,
+          0.69
         ],
         "manzana": "B",
         "lote": "8",
-        "estado": "Disponible",
-        "precio": "38000",
-        "area": "170",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -16.04,
-          -11.8,
-          -1.85
-        ],
-        "manzana": "B",
-        "lote": "9",
-        "estado": "Disponible",
-        "precio": "42000",
-        "area": "170",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -15.77,
-          -11.54,
-          -4.25
-        ],
-        "manzana": "B",
-        "lote": "10",
-        "estado": "Financiado",
-        "precio": "450000",
-        "area": "170",
-        "color": "#f97316",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -17.83,
-          -8.64,
-          -2.7
-        ],
-        "manzana": "B",
-        "lote": "11",
         "estado": "Reservado con S/. 100",
-        "precio": "42000",
-        "area": "165",
+        "precio": "40000",
+        "area": "170",
         "color": "#f59e0b",
         "opacidad": 1,
         "escala": 1,
@@ -413,15 +212,15 @@
       {
         "tipo": "lote",
         "posicion": [
-          -18.59,
-          -6.91,
-          -2.56
+          -15.6,
+          -11.75,
+          -4.31
         ],
         "manzana": "B",
-        "lote": "12",
+        "lote": "10",
         "estado": "Financiado",
         "precio": "45000",
-        "area": "160",
+        "area": "170",
         "color": "#f97316",
         "opacidad": 1,
         "escala": 1,
@@ -436,104 +235,39 @@
         "fuente": "Montserrat"
       },
       {
-        "tipo": "lote",
+        "tipo": "hotspot",
         "posicion": [
-          -18.3,
-          -8.07,
-          0.22
+          17.43,
+          -1.7,
+          9.66
         ],
-        "manzana": "B",
-        "lote": "13",
-        "estado": "Disponible",
-        "precio": "40000",
-        "area": "170",
-        "color": "#22c55e",
+        "destino": "04_mara_ii_mz_c_7184",
+        "texto": "Maravillas  2",
         "opacidad": 1,
         "escala": 1,
+        "icono": "ArrowDown",
+        "color": "#0af50e",
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
         "sombra": true,
         "fijo": false,
-        "negrita": true,
+        "negrita": false,
         "cursiva": false,
         "mostrarTextoSiempre": true,
         "fuente": "Montserrat"
       },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -18.14,
-          -8.11,
-          2.32
-        ],
-        "manzana": "B",
-        "lote": "14",
-        "estado": "Disponible",
-        "precio": "3500",
-        "area": "160",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      },
-      {
-        "tipo": "lote",
-        "posicion": [
-          -17.82,
-          -8.02,
-          4.27
-        ],
-        "manzana": "B",
-        "lote": "15",
-        "estado": "Disponible",
-        "precio": "35000",
-        "area": "160",
-        "color": "#22c55e",
-        "opacidad": 1,
-        "escala": 1,
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "mostrarTextoSiempre": true,
-        "fuente": "Montserrat"
-      }
-    ],
-    "heading": {
-      "x": -26,
-      "y": 172
-    },
-    "norteMagnetico": 0,
-    "filtro": "hdr",
-    "northOffset": 253
-  },
-  "04_mara_ii_mz_c_8506": {
-    "nombre": "Maravillas 2",
-    "imagen": "/tour/04_mara_ii_mz_c.jpg",
-    "hotspots": [
       {
         "tipo": "hotspot",
         "posicion": [
-          -16.14,
-          -2.16,
-          11.61
+          10.02,
+          -0.59,
+          -17.3
         ],
-        "destino": "01_rm_vista_lugares_referencia_2696",
-        "texto": "Maravillas   1",
+        "destino": "_self",
+        "texto": "Colegio \n\"Jose Olaya\"",
         "opacidad": 1,
-        "escala": 0.7,
+        "escala": 1,
         "icono": "ArrowDown",
         "color": "#ff0000",
         "inclinacion": 0,
@@ -543,46 +277,35 @@
         "fijo": false,
         "negrita": false,
         "cursiva": false,
-        "fontSize": 21
-      },
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat"
+      }
+    ],
+    "heading": {
+      "x": -21,
+      "y": 114
+    },
+    "norteMagnetico": 0,
+    "filtro": "normal",
+    "northOffset": 274
+  },
+  "04_mara_ii_mz_c_7184": {
+    "nombre": "Maravillas 2",
+    "imagen": "/tour/04_mara_ii_mz_c.jpg",
+    "hotspots": [
       {
         "tipo": "hotspot",
         "posicion": [
-          -18.28,
-          -2.9,
-          -7.57
+          -16.27,
+          -2.13,
+          11.43
         ],
-        "destino": "_self",
-        "texto": "COLEGIO\n\"JOSE OLAYA\"",
+        "destino": "02_residencial_maravillas_7183",
+        "texto": "Maravillas  1",
         "opacidad": 1,
-        "escala": 0.6,
+        "escala": 1,
         "icono": "ArrowDown",
-        "color": "#f59e0b",
-        "inclinacion": 0,
-        "posicionTipo": "2d",
-        "escalaZoom": false,
-        "sombra": true,
-        "fijo": false,
-        "negrita": true,
-        "cursiva": false,
-        "fontSize": 23,
-        "fuente": "Archivo Black",
-        "colorFondo": "#f7f7f7",
-        "colorTexto": "#001b85"
-      },
-      {
-        "tipo": "hotspot",
-        "posicion": [
-          -19.99,
-          0.44,
-          0.45
-        ],
-        "destino": "01_rm_vista_lugares_referencia_2696",
-        "texto": "VISTA AEREA \nDE LOS PROYECTOS",
-        "opacidad": 1,
-        "escala": 0.6,
-        "icono": "ArrowRight",
-        "color": "#0a9bf5",
+        "color": "#0af545",
         "inclinacion": 0,
         "posicionTipo": "2d",
         "escalaZoom": false,
@@ -591,17 +314,61 @@
         "negrita": false,
         "cursiva": false,
         "mostrarTextoSiempre": true,
-        "fuente": "Montserrat",
-        "fontSize": 15,
-        "colorFondo": "#3a6bdf"
+        "fuente": "Montserrat"
+      },
+      {
+        "tipo": "hotspot",
+        "posicion": [
+          -17.21,
+          -2.97,
+          -9.75
+        ],
+        "destino": "_self",
+        "texto": "Colegio\n\"Jose Olaya\"",
+        "opacidad": 1,
+        "escala": 1,
+        "icono": "ArrowDown",
+        "color": "#ff0000",
+        "inclinacion": 0,
+        "posicionTipo": "2d",
+        "escalaZoom": false,
+        "sombra": true,
+        "fijo": false,
+        "negrita": false,
+        "cursiva": false,
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat"
+      },
+      {
+        "tipo": "hotspot",
+        "posicion": [
+          -19.22,
+          4.35,
+          -3.42
+        ],
+        "destino": "01_rm_vista_lugares_referencia_7182",
+        "texto": "Vista Aerea",
+        "opacidad": 1,
+        "escala": 1,
+        "icono": "Camera",
+        "color": "#ff0000",
+        "inclinacion": 0,
+        "posicionTipo": "2d",
+        "escalaZoom": false,
+        "sombra": true,
+        "fijo": false,
+        "negrita": false,
+        "cursiva": false,
+        "mostrarTextoSiempre": true,
+        "fuente": "Montserrat"
       }
     ],
     "heading": {
-      "x": -23,
-      "y": 93
+      "x": -28,
+      "y": 4
     },
     "norteMagnetico": 0,
-    "filtro": "bright",
-    "northOffset": 294
+    "filtro": "normal",
+    "northOffset": 298
   }
 }

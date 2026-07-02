@@ -10,6 +10,7 @@ import InvierteSeguro from './pages/InvierteSeguro';
 import VendePropiedad from './pages/VendePropiedad';
 import Contacto from './pages/Contacto';
 import TourEditorPage from './pages/TourEditorPage';
+import PropiedadDetalle from './pages/PropiedadDetalle';
 
 function AppContent() {
   const location = useLocation();
@@ -64,6 +65,7 @@ function AppContent() {
           <Route path="/vende-tu-propiedad" element={<VendePropiedad />} />
           <Route path="/invierte-seguro" element={<InvierteSeguro />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/:slug" element={<PropiedadDetalle />} />
           {isDev && <Route path="/editor-360-privado/:paramTourId?" element={<TourEditorPage />} />}
         </Routes>
       </div>

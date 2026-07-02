@@ -981,7 +981,7 @@ export default function VirtualTour({
           {/* Botón de Editor Privado (Solo desarrollo) */}
           {isDev && (
             <button
-              onClick={() => window.open(`/editor-360-privado/${tourId}`, '_blank')}
+              onClick={() => window.open(`${import.meta.env.BASE_URL}editor-360-privado/${tourId}`, '_blank')}
               className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:text-white hover:bg-cyan-500/20 transition-all cursor-pointer shadow-lg"
               title="Abrir Editor Privado"
             >
