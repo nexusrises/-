@@ -53,7 +53,7 @@ export default function Navbar() {
             to="/compra-seguro" 
             className={`hover:text-nexus-accent transition-colors duration-200 py-2 uppercase ${isActive('/compra-seguro') ? 'text-nexus-accent' : 'text-white'}`}
           >
-            Compra con Seguridad
+            Compra Seguro
           </Link>
           <Link 
             to="/vende-tu-propiedad" 
@@ -101,7 +101,7 @@ export default function Navbar() {
             onClick={handleLinkClick}
             className={`p-2 rounded-xl hover:bg-white/5 ${isActive('/compra-seguro') ? 'text-nexus-accent' : 'text-white'}`}
           >
-            Compra con Seguridad
+            Compra Seguro
           </Link>
           <Link 
             to="/vende-tu-propiedad" 
